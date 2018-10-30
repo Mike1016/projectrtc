@@ -1,0 +1,132 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>mui上拉加载插件与Vue结合开发示例</title>
+        <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+        <link rel="stylesheet" href="css/mui.min.css"/>
+        <style>
+.demo1 {
+    width: 200px;
+    height: 100px;
+    background: -webkit-linear-gradient(0deg, red, blue);
+    border-radius: 10px;
+    border: 1px solid #fff;
+}
+.demo2 {
+    width: 190px;
+    height: 90px;
+    background-color: #fff;
+    border-radius: 6px;
+    margin: 0 auto;
+    margin-top: 5px;
+}
+</style>
+    </head>
+    <body>
+    <div class="demo1">
+	    <div class="demo2"></div>
+	</div>
+    <style type="text/css">
+        body,html{background-color: #f0f0f0;}
+        .mui-control-content { height: 4rem;background-color: #f0f0f0; }
+        .mui-segmented-control{background: #fff;}
+    </style>
+
+    <body>
+    	<div id="app">
+    <ul>
+      <li class="new-list" v-for="item in proarr">
+        <a :href="'/index.php/new/news?id='+item.id" class="new-item">
+          <div class="new-title ell">{{item.title}}</div>
+          <div class="new-content">
+            <div class="new-cover" v-bind:style="{backgroundImage: 'url('+item.purl+')'}"></div>
+            <div class="new-desc">{{item.introduction}}</div>
+          </div>
+          <div class="new-date">{{item.create_date}}</div>
+        </a>
+      </li>
+    </ul>
+    
+    <div id="test">
+    	<div class="items" data-id="0">0</div>
+    	<div class="items" data-id="1">1</div>
+    	<div class="items" data-id="2">2</div>
+    	<div class="items" data-id="3">3</div>
+    </div>
+    
+    
+  <div id="ajaxloading" v-show="showLoading" class="ac line-scale-pulse-out-rapid">
+    
+  </div>
+  <p class="errormsg ac orange pd20">{{errmsg}}</p>
+  </div>
+    </body>         
+        <script src="js/mui.min.js"></script>
+        <script src="js/vue.js"></script>
+        <script src="js/jquery.min.js"></script>
+        <script src="js/mui.pullToRefresh.js"></script>
+        <script src="js/mui.pullToRefresh.material.js"></script>
+        <script type="text/javascript">
+        	var h = [];
+        	$.each($('.items'),function(k,v){
+        		var child = $('.items').eq(k).attr('data-id');
+        		h.push(child);
+        	});
+        	alert(h);
+        	
+        	
+        	
+        	
+        	
+        </script>
+        
+        
+        <script type="text/javascript">
+
+new Vue({
+  el: '#app',
+  data() {
+    return {
+      proarr: [],
+      showLoading: false,
+      p:1,
+      errmsg:''
+    };
+  },
+  components: {
+  },
+  created() {
+    this.getProList();
+　　　　//监听滚动
+      window.addEventListener('scroll', this.handleScroll);
+  },
+  methods: {
+    handleScroll() {
+　　　　//判断滚动到底部
+      if ($(window).scrollTop() >=$(document).height() - $(window).height()) {
+        this.showLoading = true;
+        this.p++;
+        this.getProList(this.p);
+      }
+    },
+    getProList() {
+      var that = this;
+      $.post('url',{p:this.p},function(datas){
+            var state = datas.sign;
+        that.showLoading = false;
+        if (state === ERROK) {
+          var data = datas.data.data;
+          for (var i = 0; i < data.length; i++) {
+            that.proarr.push(data[i]);
+          }
+          that.errmsg='';
+        } else {
+          that.errmsg='暂无更多数据';
+        }
+        },'json');
+    }
+  }
+})
+        </script>
+</html>

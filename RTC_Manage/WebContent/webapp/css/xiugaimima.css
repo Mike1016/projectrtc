@@ -1,0 +1,72 @@
+
+.srk{
+	border-bottom: 1px solid #ddd;
+	width: 100%;
+	padding-top: 4%;
+	padding-bottom: 0.1rem;
+}
+.tb{
+	width: 30%;
+	line-height: 40px;
+	margin-left: 3%;
+	color: #fff;
+}
+.inpt{
+	width: 67%;
+}
+.inpt input{
+	padding: 10px;
+	font-size:0.4rem ;
+}
+.btnkuang{
+	width: 80%;
+	margin:auto;
+	padding-top: 0.4rem;
+	text-align: center;
+	color: #fff;
+	font-size: 0.45rem;
+	font-weight: 600;
+}
+.btnkuang>a{
+	color: #007AFF;
+	font-size: 0.45rem;
+	vertical-align: baseline;
+}
+.btn{
+	font-size: 0.45rem;
+	padding: 0.25rem 0;
+}
+.card>div:last-child{
+	border-bottom: none;
+}
+.card{
+	margin: 0.3rem;
+	padding: 0 0.3rem;
+	background-color: #17202e;
+	/*border: 1px solid #fff;*/
+}
+.yzm{
+	top: 0;
+	height: 0.8rem;
+	line-height: 0.8rem;
+}
+.dxyz{
+	margin-top: 0.1rem;
+	padding: 0;
+	font-size: 0.35rem;
+	box-shadow: none;
+	border: none;
+	outline: none;
+	color: #666;
+}
+.goLogin{
+	width: 60%;
+	color: #fff;
+	font-size: 0.4rem;
+	text-align: center;
+	margin: 0.4rem auto;
+}
+.goLogin span{
+	color:#2191D8 ;
+	vertical-align: baseline;
+}

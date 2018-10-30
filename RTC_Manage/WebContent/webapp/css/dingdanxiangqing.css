@@ -1,0 +1,64 @@
+.goumai{
+	background-color: #17202e;
+	padding: 0.3rem 0.6rem;
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+}
+p{color: #fff;}
+textarea::-webkit-input-placeholder {
+  /* WebKit browsers */
+  color: #fe2500;
+}
+textarea:-moz-placeholder {
+  /* Mozilla Firefox 4 to 18 */
+  color: #fe2500;
+}
+textarea::-moz-placeholder {
+  /* Mozilla Firefox 19+ */
+  color: #fe2500;
+}
+textarea::-ms-input-placeholder {
+  /* Internet Explorer 10+ */
+  color: #fe2500;
+
+}
+.listtop{
+	padding-left: 0;
+}
+.toptit{
+	padding: 0 0.3rem;
+	line-height: 0.6rem;
+}
+.goumai>div{
+	width: 45%;
+}
+.price{
+	font-size: 0.5rem;
+	color: #fe2500;
+	line-height: 1rem;
+}
+.tp{
+	width: 10%;
+}
+.dizhixiangq{
+	width: 80%;
+	padding:0 0.3rem;
+}
+.heji{
+	flex-direction: row-reverse;
+}
+.heji>div{
+	height: 1rem;
+	line-height: 1rem;
+}
+.heji>div>span{
+	color: #fe2500;
+	vertical-align: bottom;
+}
+.xiaoji>div{
+	padding: 0.2rem;
+}
+.shangpinxinxi {
+    width: 100%;
+}

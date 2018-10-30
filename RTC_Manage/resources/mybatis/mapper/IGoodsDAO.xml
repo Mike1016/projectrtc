@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.daka.dao.goods.GoodsDAO">
+
+	<sql id="goodsInfo">
+		t1.id as id,goods_type_id as goodsTypeId,goods_name as goodsName,goods_original_price as goodsOriginalPrice,
+		goods_discount_price as goodsDiscountPrice, goods_discount_rate as goodsDiscountRate, goods_count as goodsCount,
+		goods_remain_count as goodsRemainCount, freight as freight,create_user as createUser,create_time as createTime,
+		review_user as reviewUser,review_time as reviewTime,t1.state as state,remarks as remarks
+	</sql>
+	
+	<!--List<PageData> queryGoodslistPage(Page page); //分页查询-->
+	<select id="queryGoodslistPage" parameterType="page" resultType="pd">
+		select t1.*,t2.type_name as typeName,t3.username as createUser from goods_t t1 inner join goods_type_t t2 on t1.goods_type_id = t2.id
+		inner join sys_user_t t3 on t1.create_user = t3.id 
+		 where 1=1
+		<if test="pd.goods_name!= null and pd.goods_name != ''">
+			and goods_name like CONCAT('%', #{pd.goods_name}, '%')
+		</if>
+	</select>
+
+	<!--void saveGoods(GoodsVO goodsVO); //保存商品信息-->
+	<insert id="saveGoods" parameterType="com.daka.entry.GoodsVO" useGeneratedKeys="true" keyProperty="id">
+		insert into goods_t
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="goodsTypeId != null">
+				goods_type_id,
+			</if>
+			<if test="goodsName != null">
+				goods_name,
+			</if>
+			<if test="goodsOriginalPrice != null">
+				goods_original_price,
+			</if>
+			<if test="goodsDiscountPrice != null">
+				goods_discount_price,
+			</if>
+			<if test="goodsDiscountRate != null">
+				goods_discount_rate,
+			</if>
+			<if test="goodsCount != null">
+				goods_count,
+			</if>
+			<if test="goodsCount != null">
+				goods_remain_count,
+			</if>
+			<if test="freight != null">
+				freight,
+			</if>
+			<if test="createUser != null">
+				create_user,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="reviewUser != null">
+				review_user,
+			</if>
+			<if test="reviewTime != null">
+				review_time,
+			</if>
+			<if test="state != null">
+				state,
+			</if>
+			<if test="remarks != null and remarks != ''">
+				remarks,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsTypeId != null">
+				#{goodsTypeId,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsName != null">
+				#{goodsName,jdbcType=VARCHAR},
+			</if>
+			<if test="goodsOriginalPrice != null">
+				#{goodsOriginalPrice,jdbcType=DECIMAL},
+			</if>
+			<if test="goodsDiscountPrice != null">
+				#{goodsDiscountPrice,jdbcType=DECIMAL},
+			</if>
+			<if test="goodsDiscountRate != null">
+				#{goodsDiscountRate,jdbcType=DECIMAL},
+			</if>
+			<if test="goodsCount != null">
+				#{goodsCount,jdbcType=INTEGER},
+			</if>
+			<if test="goodsCount != null">
+				#{goodsCount,jdbcType=INTEGER},
+			</if>
+			<if test="freight != null">
+				#{freight,jdbcType=DECIMAL},
+			</if>
+			<if test="createUser != null">
+				#{createUser,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=VARCHAR},
+			</if>
+			<if test="reviewUser != null">
+				#{reviewUser,jdbcType=VARCHAR},
+			</if>
+			<if test="reviewTime != null">
+				#{reviewTime,jdbcType=VARCHAR},
+			</if>
+			<if test="state != null">
+				#{state,jdbcType=VARCHAR},
+			</if>
+			<if test="remarks != null and remarks != ''">
+				#{remarks,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<!--void deleteGoodsById(String id); //根据id删除商品信息-->
+	<delete id="deleteGoodsById" parameterType="java.lang.String">
+		delete from goods_t where id=#{id}
+	</delete>
+
+	<!-- app商品显示 AND g.state NOT IN ('4', '5', '6')-->
+	<select id="queryAppGoods" resultType="com.daka.entry.dto.GoodsDTO" parameterType="map">
+        SELECT
+        *
+        FROM
+        goods_t g,
+        goods_type_t gt,
+        goods_detail_t gdt
+        WHERE
+        g.goods_type_id = gt.id
+        AND g.id = gdt.goods_id
+        AND gdt.type = '1'
+		<if test="id != null and id != ''">
+			AND g.id = #{id}
+		</if>
+		<if test="typeName != null and typeName != ''">
+			AND gt.type_name = #{typeName}
+		</if>
+		<if test="goodsName != null and goodsName != ''">
+			AND g.goods_name LIKE CONCAT('%', #{goodsName}, '%')
+		</if>
+        <choose>
+            <when test="newGoods.size() > 0">
+                <foreach collection="newGoods" index="index" item="item" separator=",">
+                    <choose>
+                        <when test="item == 1004">
+                            and DATE_SUB(NOW(), INTERVAL 7 DAY) <![CDATA[ <= ]]> g.create_time
+                        </when>
+                    </choose>
+                </foreach>
+            </when>
+        </choose>
+        <choose>
+            <when test="screenType.size() > 0">
+                and g.state in(
+                <foreach collection="screenType" index="index" item="item" separator=",">
+                    <choose>
+                        <when test="item == 1003">0</when>
+                        <when test="item == 1006">1</when>
+                        <when test="item == 1007">2</when>
+                        <when test="item == 1008">3</when>
+                    </choose>
+                </foreach>
+                )
+            </when>
+        </choose>
+        GROUP BY
+        g.id
+		order by g.create_time DESC
+		<choose>
+			<when test="priceGoods.size() > 0">
+                ,
+				<foreach collection="priceGoods" index="index" item="item" separator=",">
+					<choose>
+						<when test="item == 1001">
+                            (g.goods_count-g.goods_remain_count) DESC
+						</when>
+                        <when test="item == 1002 ">
+                            g.goods_discount_price DESC
+                        </when>
+                        <when test="item == 1005">
+                            (g.goods_count-g.goods_remain_count) DESC
+                        </when>
+                        <when test="item == 1004 ">
+                            g.create_time DESC
+                        </when>
+                        <when test="item == 10021">
+                            g.goods_discount_price ASC
+                        </when>
+                        <otherwise>
+                            g.id
+                        </otherwise>
+					</choose>
+				</foreach>
+			</when>
+		</choose>
+		LIMIT #{page},10;
+	</select>
+
+	<!--app数量查询-->
+	<select id="queryAppGoodsCount" resultType="map">
+		SELECT
+		COUNT(*) AS allGoodsCount,
+		( SELECT COUNT(*) FROM goods_t WHERE state NOT IN (4,6)
+		  AND DATE_SUB(NOW(), INTERVAL 7 DAY) <![CDATA[ <= ]]> create_time ) AS newGoodsCount,
+		( SELECT COUNT(*) FROM goods_t WHERE state = 1 ) AS promotionGoodsCount
+		FROM goods_t WHERE state NOT IN (4,6);
+	</select>
+
+	<!--app 单个商品查询-->
+	<select id="queryAppGood" resultType="com.daka.entry.dto.GoodsDTO" parameterType="java.lang.Integer">
+		SELECT
+		*,(g.goods_count-g.goods_remain_count) as salesVolume
+		FROM
+		goods_t g,
+		goods_type_t gt,
+		goods_detail_t gdt
+		WHERE
+		g.goods_type_id = gt.id
+		AND g.id = gdt.goods_id
+		AND gdt.type = '1'
+		AND g.state NOT IN ('4', '6')
+		<if test="id != null and id != '' or id >= 0">
+			AND g.id = #{id}
+		</if>
+	    GROUP BY
+        g.id
+	</select>
+
+	<!--app 修改商品剩余量(减)-->
+	<update id="updateGoodsCountReduce" parameterType="java.util.List">
+		<foreach collection="list" index="index" separator=";" item="item">
+			UPDATE goods_t g
+			SET g.goods_remain_count = g.goods_remain_count - ${item.count}
+			WHERE g.goods_remain_count <![CDATA[ >= ]]> ${item.count}
+			AND g.id = ${item.goodsId}
+		</foreach>
+	</update>
+
+	<!--app 修改商品剩余量(加)-->
+	<update id="updateGoodsCountPlus" parameterType="java.util.List">
+		<foreach collection="list" separator=";" item="item">
+			update goods_t as g set g.goods_remain_count = g.goods_remain_count + ${item.count} where id = ${item.goodsId}
+		</foreach>
+	</update>
+	
+	<update id="batchSaveAttr" parameterType="java.util.List">
+		insert into goods_attr_t(goods_id,attr_name,attr_value) values
+		<foreach collection="list" separator="," item="item">
+			(
+			#{item.goodsId},
+			#{item.attrName},
+			#{item.attrValue}
+			)
+		</foreach>
+	</update>
+	<update id="batchSaveDetail" parameterType="java.util.List">
+		insert into goods_detail_t(goods_id,type,goods_attachment_content) values
+		<foreach collection="list" separator="," item="item">
+			(
+			#{item.goodsId},
+			#{item.type},
+			#{item.goodsAttachmentContent}
+			)
+		</foreach>
+	</update>
+	
+	<select id="queryGoodsCountByName" resultType="int">
+		select count(1) from goods_t where goods_name=#{0}
+	</select>
+	
+	<select id="queryGoodsInfoById" resultType="com.daka.entry.GoodsVO" parameterType="string">
+		select <include refid="goodsInfo"></include> ,type_name as typeName
+		from goods_t t1 inner join goods_type_t t2 on t1.goods_type_id = t2.id where t1.id=#{0}
+	</select>
+	
+	<select id="queryGoodsAttrByGoodsId" resultType="com.daka.entry.GoodsAttrVO" parameterType="string">
+		select id,goods_id as goodsId,attr_name as attrName,attr_value as attrValue
+		from goods_attr_t where goods_id=#{0}
+	</select>
+	
+	<select id="queryGoodsDetailByGoodsId" resultType="com.daka.entry.GoodsDetailVO" parameterType="string">
+		select id,goods_id as goodsId,type as type,goods_attachment_content as goodsAttachmentContent
+		from goods_detail_t where goods_id=#{0}
+	</select>
+	
+	<update id="updateGoods" parameterType="com.daka.entry.GoodsVO">
+		update goods_t 
+		<set>
+			<if test="goodsTypeId != null and goodsTypeId != ''">
+				goods_type_id = #{goodsTypeId},
+			</if>
+			<if test="goodsName != null and goodsName != ''">
+				goods_name = #{goodsName},
+			</if>
+			<if test="goodsOriginalPrice != null and goodsOriginalPrice != ''">
+				goods_original_price = #{goodsOriginalPrice},
+			</if>
+			<if test="goodsDiscountPrice != null and goodsDiscountPrice != ''">
+				goods_discount_price = #{goodsDiscountPrice},
+			</if>
+			<if test="goodsDiscountRate != null and goodsDiscountRate != ''">
+				goods_discount_rate = #{goodsDiscountRate},
+			</if>
+			<if test="goodsCount != null and goodsCount != ''">
+				goods_count = #{goodsCount},
+			</if>
+			<if test="freight != null and freight != ''">
+				freight = #{freight},
+			</if>
+			<if test="remarks != null and remarks != ''">
+				remarks = #{remarks},
+			</if>
+		</set>
+		where id=#{id}
+	</update>
+	
+	<update id="delGoodsDetailByGoodsId" >
+		delete from goods_detail_t where goods_id=#{0}
+	</update>
+	
+	<update id="delGoodsAttrByGoodsId" >
+		delete from goods_attr_t where goods_id=#{0}
+	</update>
+	
+</mapper>

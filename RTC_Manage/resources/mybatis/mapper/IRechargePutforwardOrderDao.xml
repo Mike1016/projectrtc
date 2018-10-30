@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.daka.dao.recharge.RechargePutforwardOrderDao">
+
+	<!-- 根据id、customerId、payOrderNo、payOutOrderNo、payState查询订单 -->
+	<select id="findByVO" parameterType="com.daka.entry.RechargePutforwardOrderVO" resultType="com.daka.entry.RechargePutforwardOrderVO">
+		select * from recharge_putforward_order_t where 1=1
+		<if test="id ! =null">
+			and id=#{id} 
+		</if>
+		<if test="customerId ! =null">
+			and customer_id=#{customerId} 
+		</if>
+		<if test="payOrderNo ! =null">
+			and pay_order_no=#{payOrderNo} 
+		</if>
+		<if test="payOutOrderNo ! =null">
+			and pay_out_order_no=#{payOutOrderNo} 
+		</if>
+		<if test="payState ! =null">
+			and pay_state=#{payState} 
+		</if>
+		<if test="payType ! =null">
+			and pay_type=#{payType} 
+		</if>
+	</select>
+	
+	<select id="findByOrderno" parameterType="java.lang.String" resultType="com.daka.entry.RechargePutforwardOrderVO">
+		select * from recharge_putforward_order_t where pay_order_no=#{payOrderNo}
+	</select>
+	
+	<!-- 生成新订单 -->
+	<insert id="insert" parameterType="com.daka.entry.RechargePutforwardOrderVO">
+		insert into 
+		recharge_putforward_order_t(customer_id,pay_order_no,pay_apply_total,
+		pay_state,pay_apply_time,pay_type,phone) 
+		values(#{customerId},#{payOrderNo},#{payApplyTotal},
+		#{payState},#{payApplyTime},#{payType},#{phone})
+	</insert>
+	
+	<!-- 生成提现订单 -->
+	<insert id="insertTransfer" parameterType="com.daka.entry.RechargePutforwardOrderVO">
+		insert into 
+		recharge_putforward_order_t(customer_id,pay_order_no,pay_out_order_no,
+		pay_apply_total,pay_reality_total,pay_state,pay_apply_time,pay_complete_time,
+		pay_type) 
+		values(#{customerId},#{payOrderNo},#{payOutOrderNo},#{payApplyTotal},
+		#{payRealityTotal},#{payState},#{payApplyTime},#{payCompleteTime},#{payType})
+	</insert>
+
+	<update id="update" parameterType="com.daka.entry.RechargePutforwardOrderVO">
+		update recharge_putforward_order_t  
+		<trim prefix="set" suffixOverrides=",">
+		   <if test="payOutOrderNo != null and payOutOrderNo != ''">
+		   		pay_out_order_no=#{payOutOrderNo},
+		   </if>
+		   <if test="payRealityTotal != null and payRealityTotal != ''">
+		   		pay_reality_total=#{payRealityTotal},
+		   </if>
+		   <if test="payState != null and payState != ''">
+		   		pay_state=#{payState},
+		   </if>
+		   <if test="payCompleteTime != null and payCompleteTime != ''">
+		   		pay_complete_time=#{payCompleteTime},
+		   </if>
+	 	</trim> 
+ 		where pay_order_no=#{payOrderNo}
+	</update>
+	
+	<!-- 查询用户的最近一条提现记录 -->
+	<select id="queryRecentDate" parameterType="java.lang.String" resultType="com.daka.entry.RechargePutforwardOrderVO">
+		select * from recharge_putforward_order_t where 
+		pay_type=2 
+		and pay_complete_time=(select max(pay_complete_time) from recharge_putforward_order_t) 
+		and customer_id=#{customerId}
+	</select>
+	
+	<!-- 分页查询充值提现记录  可按照用户手机模糊查询，充值或提现完成时间，分提现充值种类查看 -->
+	<select id="queryrechargeorderlistPage" parameterType="page" resultType="pd">
+		select r.*,c.phone as phones from recharge_putforward_order_t as r,customer_t as c
+        where r.customer_id=c.id  
+        and r.pay_state=2 
+        <if test="pd.phones!= null and pd.phones != ''">
+            and c.phone like CONCAT('%', #{pd.phones}, '%')
+        </if>
+        <if test="pd.completeFrom!= null and pd.completeFrom != ''
+        and pd.completeTo!= null and pd.completeTo != ''">
+            and r.pay_complete_time BETWEEN #{pd.completeFrom} AND #{pd.completeTo}
+        </if>
+		<if test="pd.pay_type!=null  and pd.pay_type!=''">
+		    and r.pay_type=#{pd.pay_type} 
+		</if>
+	</select>
+</mapper>

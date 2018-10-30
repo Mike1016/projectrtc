@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.daka.dao.shopping.ShoppingCoinLogDAO">
+
+    <!-- 商城币 EXISTS(SELECT 1 FROM shopping_order_t
+        WHERE customer_id = #{id} AND state = 4 AND id = order_id)-->
+    <select id="selectShoppingCoinList" parameterType="int" resultType="com.daka.entry.ShoppingCoinLogVO">
+        SELECT remark,create_time, shopping_coin
+        FROM shopping_coin_log_t WHERE customer_id = #{id}  order by create_time DESC
+    </select>
+
+    <insert id="saveCoin" parameterType="com.daka.entry.ShoppingCoinLogVO">
+      insert INTO shopping_coin_log_t(shopping_coin,customer_id,order_id,create_time,remark)
+      VALUES(#{shoppingCoin},#{customerId},#{orderId},#{createTime},#{remark})
+    </insert>
+
+    <select id="queryCoin" parameterType="java.lang.Integer" resultType="com.daka.entry.ShoppingCoinLogVO">
+        select * from shopping_coin_log_t where order_id = #{orderId}
+    </select>
+    
+    <insert id="saveShopCoinLog">
+        INSERT INTO shopping_coin_log_t
+            (customer_id, create_time,  shopping_coin, remark)
+        SELECT id, NOW(),  waiting_dividends_wallet * #{rebate} * #{proportion}, #{remark}
+        FROM customer_t WHERE state = 1
+    </insert>
+</mapper>

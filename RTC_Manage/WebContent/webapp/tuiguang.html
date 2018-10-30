@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>我的推广</title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/base.css" rel="stylesheet" />
+		<style type="text/css">
+			.ewm{
+				width: 45%;position: absolute;bottom: 25%;left: 27%;
+			}
+			.lj{
+				width:70%;position: absolute;bottom: 1rem;left: 15%;
+			}
+			#qrcode img{
+				width: 92%;
+				margin:4%;
+			}
+			.lj>p{
+				
+				word-wrap: break-word;
+				word-break: break-all;
+				overflow: hidden;
+			}
+			.location{
+				width: 74%;
+			}
+			.location .lijie{color: #fff;font-size: 0.4rem;width: 100%;text-overflow: ellipsis;overflow: hidden;white-space:nowrap;}
+			.copy{
+				width: 26%;
+			}
+			.btn{width:1.5rem;background-color: #df3e65;border-radius: 5px;color: #fff;border-color: #fe2500;padding:0.1rem  0;}
+			.close-btn{
+				position: absolute;
+				width: 0.75rem;
+				top: 0.4rem;
+				left: 0.4rem;
+			}
+			.close-btn img{width: 100%;}
+		</style>
+	</head>
+	<body>
+		<div id="example" class="content pr" style="background-color:#FE2059 ;">
+			<img src="images/myer/tuiguang.jpg" alt="" />
+			
+			<div class="close-btn" onclick="window.location.href='my.html'"><img src="images/myer/close.png"/></div>
+			<div class="ewm">
+				<div id="qrcode" class="mui-text-center"></div>
+			</div>
+			<div class="flexrow lj">
+				<div class="location mui-text-center">
+					<p class="lijie"></p>
+				</div>
+				<div class="copy mui-text-right">
+					<button class="btn">复制</button>
+				</div>
+			</div>
+		</div>
+	
+		<script src="js/jquery.min.js"></script>
+		<script src="js/ajax1.js"></script>
+		<script src="js/qrcode.js"></script>
+		<script type="text/javascript" src="js/base.js"></script>
+		<script src="js/mui.min.js"></script>
+		<script src="js/clipboard.min.js"></script>
+		<script>
+			var sessionId = localStorage['sessionId'];
+			var phone ='',urls='http://154.222.142.152/GCR_Manage/webapp/tuiguangregister.html';
+			ajax({
+				type:"get",
+				url:"/app/customer/memberCenter.do",
+				data:{
+					sessionId:sessionId
+				},
+				async:true,
+				success:function(res){
+					phone = res.data.phone;
+					var sj =urls+"?"+phone;
+					$('.lijie').text(sj);
+					makeCode(sj);
+				}
+			});
+			
+			var qrcode = new QRCode(document.getElementById("qrcode"), {
+				width : 150,
+				height : 150
+			});
+			function makeCode (data) {		
+				//console.log(data);
+				qrcode.makeCode(data);
+			}
+			var clipboard = new ClipboardJS('.btn', {
+		        text: function() {
+		//			console.log(this);
+		            return urls+"?"+phone;
+		        }
+		    });
+		
+		    clipboard.on('success', function(e) {
+		//      console.log(e);
+				mui.toast('复制成功！')
+		    });
+		
+		    clipboard.on('error', function(e) {
+				//      console.log(e);
+				mui.toast('复制失败！')
+		    });
+		    
+		</script>
+	</body>
+
+</html>

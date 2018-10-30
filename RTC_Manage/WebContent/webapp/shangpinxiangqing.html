@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>商品详情</title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/base.css" rel="stylesheet" />
+		<link href="css/shangpingxiangqing.css" rel="stylesheet" />
+	</head>
+	<body>
+		<div id="example" class="content f t">
+			<div class="yemianbiti  phoneblock flexrow jcsa">
+				<a onClick="javascript:history.back(-1)" class="fanhuiyige mui-icon mui-icon-back"></a>
+				<div class="active" data-padid="#spzs">商品</div>
+				<div data-padid="#spxq">详情</div>
+				<div data-padid="#spcs">参数</div>
+			</div>
+			<div class="shangpinxinxi">
+				<div id="spzs" class="active">
+					<div class="banner">
+		<div id="slider" class="mui-slider" >
+			<div class="mui-slider-group mui-slider-loop">
+				<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
+				<div class="mui-slider-item mui-slider-item-duplicate">
+					<a href="#">
+						<img :src="zuihouimg">
+					</a>
+				</div>
+				<!-- 第一张 -->
+				<div v-for="itme in goodimgs" class="mui-slider-item">
+					<a href="#">
+						<img :src="itme.goodsAttachmentContent">
+					</a>
+				</div>
+				<!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
+				<div class="mui-slider-item mui-slider-item-duplicate">
+					<a href="#">
+						<img :src="diyiimg">
+					</a>
+				</div>
+			</div>
+					</div>
+					</div>
+					
+					<div class="card">
+						<div class="flexrow jies">
+							<p class="wbyc">{{goodname}}</p>
+							<div class="zwkf">
+								<img  src="images/shangcheng/fenxiang.png" alt="" />
+							</div>
+						</div>
+						<div class="je">
+							<span class="maijia">￥{{goodxj}}</span>
+							<span class="yuanjia">￥{{goodyj}}</span>
+						</div>
+						<div class="flexrow kdxl">
+							<div>快递：包邮</div>
+							<div>销量：{{goodxl}}件</div>
+						</div>
+						<div class="zibao flexrow ">
+							<button>正品保障</button>
+						</div>
+					</div>
+					<div class="card" @click="xzsl">
+						<div>
+							<span v-if="shuliang >=1">数量 x{{shuliang}}</span>
+							<span v-else>请选择数量</span>
+							<span class="mui-icon mui-icon mui-icon-forward" style="float: right;"></span>
+						</div>
+					</div>
+					<div class="card">
+						<div class="dianpu flexrow jcsa">
+							<div class="tupian"><img src="images/shangcheng/logo.png" alt="" /></div>
+							<div class="flexcolumn jcsa">
+								<p>GCR商城</p>
+								<p>商家：栀子花开</p>
+							</div>
+							<div class="flexrow jcsa">
+								<button class="btnmin">全部宝贝</button>
+								<button class="btnminfan">进店逛逛</button>
+							</div>
+						</div>
+						<div class="flexrow jcsb" style="border-top: 1px solid #eee;padding: 0.1rem;">
+							<span>全部：{{goodzs}}</span>
+							<span>新品：{{goodxps}}</span>
+							<span>促销：{{goodcxs}}</span>
+						</div>
+						
+					</div>
+				</div>
+				<div id="spxq">
+					<img v-for="itme in goodxqimgs" :src="itme.goodsAttachmentContent" alt="" />
+				</div>
+				<div id="spcs">
+					<div class="card">
+						<div v-for="itme in goodcanshu" class="csb flexrow">
+							<div class="minc">{{itme.attrName}}</div>
+							<div class="csz">{{itme.attrValue}}</div>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+			
+			<div v-if="butlists"  class="slxz">
+				<div class="pr">
+					<div class="sltp">
+						<img :src="goodimg" alt="" />
+					</div>
+					<div class="spxx flexcolumn jcsb">
+						<p>{{goodname}}</p>
+						<span class="maijia">￥{{goodxj}}</span>
+					</div>
+					<span @click="xzsl" class=" gb mui-icon mui-icon-close"></span>
+				</div>
+				<div class="sljj flexrow jcsb">
+					<span>数量</span>
+					<div class="jiajianfu flexrow">
+						<div class="fuh" @click="jian" style="border-right: 1px solid #fe2059 ;">-</div>
+						<div class="zhi">{{shuliang}}</div>
+						<div class="fuh" @click="jia" style="border-left: 1px solid #fe2059 ;">+</div>
+					</div>
+				</div>
+				<button class="btn" @click="tijiao">确定</button>
+			</div>
+			
+			<div class="footer flexrow">
+				<div class="flexrow jcsa bottom-img">
+					<div>
+						<img class="shoucang" src="images/shangcheng/shoucang-01.png" alt="" />
+					</div>
+					<div>
+						<img src="images/shangcheng/dianpu.png" alt="" />
+					</div>
+					<div onclick="javascript:window.location.href='gouwuge.html'">
+						<img src="images/shangcheng/gouwuche.png" alt="" />
+					</div>
+				</div>
+				<div class="gmbtn flexrow" style="width: 48%;">
+					<div @click="jiarugouwuche">加入购物车</div>
+					<div @click="lijigoumai">立即购买</div>
+				</div>
+			</div>
+			
+			<div  v-if="butlists"  class="tanchuang"></div>
+		</div>
+		
+		<script src="js/jquery.min.js"></script>
+		<script src="js/mui.min.js"></script>
+		<script src="js/base.js"></script>
+		<script src="js/vue.js"></script>
+		
+		<script src="js/ajax1.js"></script>
+		<script src="js/shangpinxiangqing.js"></script>
+		<script>
+			mui.init({
+			
+			});
+			var slider = mui("#slider");
+				slider.slider({
+					interval: 3000
+				});
+			
+			$('.yemianbiti').off('click').on('click','[data-padid]',function(){
+				console.log(2);
+				$(this).addClass('active').siblings().removeClass('active');
+				var id = $(this).attr('data-padid');
+				$(id).addClass('active').siblings().removeClass('active');
+			});
+			$('.zwkf').on('tap',function(){
+				mui.toast('暂未开放！');
+			});
+			var off = true;
+			$('.shoucang').on('click',function(ev){
+				if(off==true){
+					$(ev.target).attr('src','images/shangcheng/shoucang-02.png');
+					off = false;
+				}else{
+					$(ev.target).attr('src','images/shangcheng/shoucang-01.png');
+					off = true;
+				}
+			})
+
+		</script>
+	</body>
+
+</html>

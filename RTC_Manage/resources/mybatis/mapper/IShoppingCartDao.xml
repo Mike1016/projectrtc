@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.daka.dao.shopping.ShoppingCartDAO">
+    <!-- app 添加购物城商品 -->
+    <insert id="saveAppShoppingCart"  parameterType="com.daka.entry.ShoppingCartVO">
+        INSERT INTO shopping_cart_t (
+            customer_id,
+            goods_id,
+            count,
+            state,
+            create_time
+        )
+        VALUES(#{customerId},#{goodsId},#{count},0,NOW())
+    </insert>
+
+    <!--app 查询购物车信息-->
+    <select id="queryShoppingCartInfo" resultType="com.daka.entry.dto.ShoppingCartDTO" parameterType="java.lang.Integer">
+        SELECT
+            *
+        FROM
+            shopping_cart_t sc,goods_t g,goods_detail_t gd
+        WHERE sc.goods_id = g.id
+        AND g.id = gd.goods_id AND gd.type = 1
+        AND sc.state = 0 AND sc.customer_id = #{customerId}
+        GROUP BY sc.id
+    </select>
+
+    <!--app 软删除 修改状态-->
+    <update id="updateShoppingCartState" parameterType="map">
+        update shopping_cart_t set state = 1 where 1=1
+         <if test="customerId > 0">
+             and customer_id = #{customerId}
+         </if>
+        <if test="id.length > 0">
+            and id in(
+            <foreach collection="id" index="index" item="item" separator=",">
+                #{item}
+            </foreach>
+            )
+        </if>
+    </update>
+
+    <!--app 修改购物城商品的数量-->
+    <update id="updateShoppingCartCount" parameterType="map">
+        update shopping_cart_t set count = #{count} where state = 0 and id = #{id};
+    </update>
+    
+    <select id="queryCartGoods" resultType="com.daka.entry.ShoppingCartVO" parameterType="com.daka.entry.ShoppingCartVO">
+    	SELECT * FROM shopping_cart_t WHERE state = 0 and goods_id = #{goodsId} and customer_id = #{customerId}
+    </select>
+
+    <!--结算后修改购物车的状态-->
+    <update id="updateCartState" parameterType="String">
+        update shopping_cart_t set state = 2 where state = 0 and ${goodsId}
+    </update>
+</mapper>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>找回密码</title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/base.css" rel="stylesheet" />
+		<link href="css/xiugaimima.css" rel="stylesheet" />
+	</head>
+	<body>
+		<div class="content t">
+			<div class="yemianbiti bg phoneblock">
+				<a onClick="javascript:history.back(-1)" class="fanhuiyige mui-icon mui-icon-back"></a>
+				找回密码
+			</div>
+			<div class="inptkuag card">
+				<div class="srk flexrow jcct">
+					<div class="tb">
+						手机号
+					</div>
+					<div class="inpt">
+						<input type="text" class="shouji" maxlength="11"  pattern="\d*"/ placeholder="请输入手机号"/>
+					</div>
+				</div>
+				<div class="srk flexrow jcct">
+					<div class="tb">
+						图形验证码
+					</div>
+					<div class="inpt pr txyz">
+						<!--<input type="text" placeholder="请输入图形验证码"/>
+						<div class="yzm " id="checkCode">
+							
+						</div>-->
+					</div>
+				</div>
+				<div class="srk flexrow jcct">
+					<div class="tb">
+						短信验证码
+					</div>
+					<div class="inpt pr">
+						<input type="text" class="dxm" maxlength="6"  pattern="\d*"/ placeholder="请输入短信验证码"/>
+						<button class="yzm dxyz">
+							获取验证码
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class="inptkuag card">
+
+				<div class="srk flexrow jcct">
+					<div class="tb">
+						新密码
+					</div>
+					<div class="inpt pr">
+						<input type="password" class="mm" maxlength="16" placeholder="请输入密码"/>
+					</div>
+				</div>
+				<div class="srk flexrow jcct">
+					<div class="tb">
+						确认密码
+					</div>
+					<div class="inpt pr">
+						<input type="password" class="qrmm" maxlength="16" placeholder="请确认密码"/>
+					</div>
+				</div>
+			</div>
+			<div class="btnkuang">
+				<button class="btn" id="check-btn">立即找回</button>
+			</div>
+			<p class="goLogin" onclick="javascript:window.location.href='login.html'">已有账户？<span>立即登录</span></p>
+		</div>
+
+		<script src="js/jquery.min.js"></script>
+		<script src="js/base.js"></script>
+		<script src="js/mui.min.js"></script>
+		<script src="js/ajax1.js"></script>
+		<script src="js/public.js"></script>
+		<script src="js/verify.js"></script>
+		<script src="js/tuxingyz.js"></script>
+		<script>
+			function yzmzq(){
+				var mm = $.trim($('.mm').val());  //密码
+			var qrmm = $.trim($('.qrmm').val());  //确认密码
+			var sj = $.trim($('.shouji').val());   //手机
+			var dxm = $.trim($('.dxm').val());  //短信码
+			var phonereg = /^1[3456789]\d{9}$/;   //手机号验证
+			var passwordReg = /^(?![^a-zA-Z]+$)(?!\D+$).{6,16}$/;  //密码验证
+			if(dxm == ""){
+				mui.toast('短信码不能为空！'); 
+			        return false; 
+			}
+			if(!phonereg.test(sj)) { 
+			       	mui.toast('请输入有效的手机号码！'); 
+			        return false; 
+			}
+			if(!passwordReg.test(mm)){
+				mui.toast('密码为6-16位数字与字母！'); 
+			        return false;
+			}
+			if(mm != qrmm){
+				mui.toast('两次密码不一致,请重新确认密码');
+				 return false;
+			}
+			console.log(mm);console.log(qrmm);
+			console.log(sj);console.log(dxm);
+			ajax({
+					type:"POST",
+					url:'/app/customer/retrievePass.do',
+					data:{
+						phone:sj, 
+						authCode:dxm,
+						password:mm
+					},
+					success:function(res){
+						if(res.status == 1){
+							mui.toast(res.msg);
+							location='login.html';
+						}else{
+							mui.toast(res.msg);
+						}
+					}
+				});
+			}
+			
+		</script>
+	</body>
+
+</html>

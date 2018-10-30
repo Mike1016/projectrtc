@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>商城币</title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/base.css" rel="stylesheet" />
+		<link href="css/tiyanjin.css" rel="stylesheet" />
+	</head>
+	<body>
+		<div id="example" class="content t">
+			<div class="yemianbiti bg phoneblock">
+				<a onClick="javascript:history.back(-1)" class="fanhuiyige mui-icon mui-icon-back"></a>
+				商城币
+			</div>
+			<div class="card flexrow jcsb">
+				<div class="flexcolumn jcct">商城币</div>
+				<div class="txtbu flexcolumn jcct">{{sj}}</div>
+				<div></div>
+			</div>
+			<div class="card liebiaokuang">
+				<div class="ytsj flexrow jcsb" v-for="item in list">
+					<div >
+						<p>{{item.remark}}</p>
+						<p style="font-size: 0.35rem">{{item.createTime}}</p>
+					</div>
+					<div class="">
+						{{item.shoppingCoin}}币
+					</div>
+					<div>
+						<span class="ztbtn btnbul">成功</span>
+					</div>
+				</div>
+				
+			</div>
+			
+		</div>
+	
+		<script src="js/jquery.min.js"></script>
+		<script src="js/base.js"></script>
+		<script src="js/mui.min.js"></script>
+		<script src="js/ajax1.js"></script>
+		<script src="js/vue.js"></script>
+		<!--<script src="js/shangchengbi.js"></script>-->
+		<script>
+			
+		</script>
+	</body>
+
+</html>

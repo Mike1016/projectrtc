@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.daka.dao.goods.GoodsDetailDAO">
+    <!--app商品参数查询-->
+    <select id="queryAppGoodsDetailById" resultType="com.daka.entry.GoodsDetailVO" parameterType="java.lang.Integer">
+        select * from goods_detail_t where  type = 2
+        <if test="id != null and id != '' or id >= 0">
+           and goods_id=#{id}
+        </if>
+    </select>
+    <!--app商品实体图片查询-->
+    <select id="queryAppGoodsImgById" resultType="com.daka.entry.GoodsDetailVO" parameterType="java.lang.Integer">
+        select * from goods_detail_t where  type = 1
+        <if test="id != null and id != '' or id >= 0">
+            and goods_id=#{id}
+        </if>
+    </select>
+    
+    <insert id="saveGoodsDetail" parameterType="com.daka.entry.GoodsDetailVO">
+        insert into goods_detail_t
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="goodsId != null">
+                goods_id,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="goodsAttachmentContent != null">
+                goods_attachment_content,
+            </if>
+            <if test="state != null">
+                state,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="goodsId != null">
+                #{goodsId,jdbcType=INTEGER},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsAttachmentContent != null">
+                #{goodsAttachmentContent,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null">
+                #{state,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+</mapper>

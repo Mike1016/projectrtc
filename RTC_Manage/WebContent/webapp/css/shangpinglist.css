@@ -1,0 +1,222 @@
+input::-webkit-input-placeholder {
+  /* WebKit browsers */
+  color: #fff;
+}
+input:-moz-placeholder {
+  /* Mozilla Firefox 4 to 18 */
+  color: #fff;
+}
+input::-moz-placeholder {
+  /* Mozilla Firefox 19+ */
+  color: #fff;
+}
+input::-ms-input-placeholder {
+  /* Internet Explorer 10+ */
+  color: #fff;
+}
+.ssksxb{
+	z-index: 1000;
+	background-color: #17202e;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+}
+.ssk{
+	padding: 0.3rem;
+	background-color: #17202e;
+	margin-bottom: 0.2rem;
+}
+.listqiehuan{
+	width:13%;
+}
+.inpus{
+	width:76%;
+	position: relative;
+}
+.inpus>input{
+	padding: 0;
+	height: 34px;
+	color: #fff;
+	background-color: #303744;
+	padding: 7px 0.3rem 7px 1rem;
+}
+.sousuo{
+	position: absolute;
+	right: 0.2rem;
+	
+}
+.sxb{
+	padding: 0.4rem 0;
+	background-color: #17202e;
+	margin-bottom: 0.2rem;
+}
+.sxb>div{
+	width: 25%;
+	border-right: 1px solid #ddd ;
+	text-align: center;
+}
+.sxb>div:last-child{
+	border-right:none;
+}
+.sxb>div.active{
+	color: #fe2500;
+}
+.btnlists{
+	width: 100%;
+	padding: 0.2rem;
+	background-color: #17202e;
+	/*display: none;*/
+	position: absolute;
+	top:100%;
+	border-top: 0.2rem solid #000518;
+}
+.btnlists button{
+	background-color: transparent;
+	color: #ccc;
+}
+.btnlist{
+	padding: 0.2rem;
+	border-bottom: 1px solid #ddd;
+}
+.btnlist>div{
+	width: 33.33%;
+	margin: 0.3rem 0;
+	text-align: center;
+}
+.btnlist>div>button.active{
+	color:#fe2500;
+}
+.jcsb>button{
+	margin: 0.3rem 0 0.1rem;
+	border: none;
+	color: #999;
+	font-size: 0.4rem;
+}
+.jcsb>button.red{
+	color: #fe2500;
+}
+.mui-backdrop {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 998;
+    background-color: rgba(0,0,0,.3);
+}
+
+
+
+.shangpinlist{
+	/*padding: 0.1rem;*/
+	margin-top: 3.1rem;
+}
+.shangpinlist>div{
+	width: 47%;
+	border-radius: 10px;
+	margin: 1.5%;
+	background-color: #fff;
+	float: left;
+}
+.shangpinlist>div .tupian{
+	width: 100%;
+	height: 4.5rem;
+}
+.shangpinlist>div .tupian>img{
+	height: 100%;
+}
+.shangpinlist>div>div>.jies{
+	padding: 0.2rem;
+}
+.shangpinlist>div>div>.jies>p{
+	font-weight: 600;
+	overflow:hidden;
+	text-overflow: ellipsis;
+	display:-webkit-box;
+	-webkit-line-clamp:2;
+	-webkit-box-orient:vertical;
+}
+.shangpinlist>div>div>.jies>div.price{
+	margin: 0.1rem;
+	font-size: 0.45rem;
+	color: red;
+	font-weight: 600;
+}
+.shangpinlist>div>div>.jies>div>button{
+	color: #fff;
+	font-size: 0.35rem;
+	background-color: red;
+	padding: 0.1rem 0.3rem;
+	border:none;
+}
+
+
+.shangpinlistrow{
+	padding: 0.1rem;
+	margin-top: 3.1rem;
+}
+.shangpinlistrow>div{
+	width: 100%;
+	border-radius: 10px;
+	margin: 0.1rem;
+	background-color: #fff;
+}
+.shangpinlistrow>div>div>.tupian{
+	width: 35%;
+	height: 3.5rem;
+}
+.shangpinlistrow>div>div>.tupian>img{
+	width: 100%;
+	height: 100%;
+}
+.shangpinlistrow>div>div>.jies{
+	width: 65%;
+	padding: 0.2rem;
+	background-color: #fff;
+}
+.shangpinlistrow>div>div>.jies>p{
+	font-weight: 600;
+	overflow:hidden;
+	text-overflow: ellipsis;
+	display:-webkit-box;
+	-webkit-line-clamp:2;
+	-webkit-box-orient:vertical;
+}
+.shangpinlistrow>div>div>.jies>div.price{
+	margin: 0.1rem;
+	font-size: 0.45rem;
+	color: red;
+	font-weight: 600;
+}
+.shangpinlistrow>div>div>.jies>div>button{
+	color: #fff;
+	font-size: 0.35rem;
+	background-color: red;
+	padding: 0.1rem 0.3rem;
+	border:none;
+}
+.mui-block{
+	display: none !important;
+}
+#lists{
+	padding-bottom: 0.5rem;
+}
+.jzsj{
+	text-align: center;
+	padding: 0.2rem 0;
+	font-size: 0.45rem;
+	font-weight: 900;
+	/*background-color: #fff;*/
+	margin-bottom: 0.5rem;
+}
+
+.search{
+	position: absolute;
+	width: 0.4rem;
+	left: 0.3rem;
+}
+.listqiehuan img {
+    width: 0.65rem;
+    margin-top: 0.1rem;
+}

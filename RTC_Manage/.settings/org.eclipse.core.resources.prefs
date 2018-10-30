@@ -1,0 +1,11 @@
+eclipse.preferences.version=1
+encoding//WebContent/WEB-INF/page/index.jsp=UTF-8
+encoding//WebContent/WEB-INF/page/login.jsp=UTF-8
+encoding//resources/\u90E8\u7F72\u8BF4\u660E.properties=UTF-8
+encoding//src/com/daka/annotation/Log.java=UTF-8
+encoding//src/com/daka/util/PageUtil.java=UTF-8
+encoding//src/com/daka/util/Tools.java=UTF-8
+encoding//src/com/daka/util/email/MailSender.java=UTF-8
+encoding//src/com/daka/util/email/MailSenderInfo.java=UTF-8
+encoding//src/com/daka/util/email/SimpleMailSender.java=UTF-8
+encoding/<project>=UTF-8

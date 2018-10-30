@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.daka.dao.refunds.IRefundsDAO">
+
+	<!-- 添加退款申请 -->
+	<insert id="insert" parameterType="com.daka.entry.RefundsVO">
+		insert into 
+		refunds_t(customer_id,total_recharge_amount,total_putforward_amount,
+		refundable_amount,create_time) 
+		values(#{customerId},#{totalRechargeAmount},#{totalPutforwardAmount},
+		#{refundableAmount},now())
+	</insert>
+	
+	<select id="findByCustomer" parameterType="java.lang.Integer" resultType="com.daka.entry.RefundsVO">
+		select * from refunds_t where state in(0,1) and customer_id=#{customerId}
+	</select>
+
+</mapper>

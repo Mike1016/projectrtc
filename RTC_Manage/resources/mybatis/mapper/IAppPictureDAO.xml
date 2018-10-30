@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.daka.dao.apppicture.IAppPictureDAO">
+
+    <!-- 新增图片 -->
+    <insert id="insert" parameterType="com.daka.entry.AppPictureVO">
+		insert into app_picture_t(picture_img,type,pic_explain,maintenance_time)
+		values(#{pictureImg},#{type},#{picExplain},NOW())
+	</insert>
+
+    <!-- 根据id查询图片信息 -->
+    <select id="findById" parameterType="java.lang.Integer" resultType="com.daka.entry.AppPictureVO">
+		select * from app_picture_t where id=#{id}
+	</select>
+
+    <!-- 分页查询 -->
+    <select id="findAlllistPage" parameterType="page" resultType="pd">
+        select * from app_picture_t where 1=1
+        <if test="pd.type!=null and pd.type!=''">
+            and type=#{pd.type}
+        </if>
+    </select>
+
+    <!-- 修改图片信息 -->
+    <update id="update" parameterType="com.daka.entry.AppPictureVO">
+		update app_picture_t set
+		picture_img=#{pictureImg},type=#{type},
+		pic_explain=#{picExplain},maintenance_time=now() 
+		where id=#{id}
+	</update>
+
+    <!-- 删除 -->
+    <delete id="delete" parameterType="java.lang.Integer">
+		delete from app_picture_t where id=#{id}
+	 </delete>
+    <!--查询全部图片-->
+    <select id="findAll" resultType="com.daka.entry.AppPictureVO">
+	 	select * from app_picture_t
+	 </select>
+    <!--查询不同类型图片的路径-->
+    <select id="findImagePath" parameterType="java.lang.Integer" resultType="String">
+        SELECT picture_img FROM app_picture_t
+        <if test="type!= null and type != ''">
+            where type=#{type}
+        </if>
+        order by maintenance_time desc
+    </select>
+
+</mapper>

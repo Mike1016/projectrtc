@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.daka.dao.recharge.RechargeLogDAO">
+
+	<!--List<PageData> queryDividendslistPage(Page page); //分页查询分红管理-->
+	<select id="queryDividendslistPage" resultType="pd" parameterType="page">
+		SELECT t2.nick_name,t2.phone,t2.level,t1.* FROM recharge_log_t t1 INNER JOIN customer_t t2 ON t1.customer_id = t2.id
+		where 1=1
+		<if test="pd.nick_name!= null and pd.nick_name != ''">
+			and nick_name like CONCAT('%', #{pd.nick_name}, '%')
+		</if>
+	</select>
+
+	<!-- 根据id、customerId、rechargeOrderId查询充值提现记录 -->
+	<select id="findByVO" parameterType="com.daka.entry.RechargeLogVO" resultType="com.daka.entry.RechargeLogVO">
+		select * from recharge_log_t where 1=1
+		<if test="id ! =null">
+			and id=#{id} 
+		</if>
+		<if test="customerId ! =null">
+			and customer_id=#{customerId} 
+		</if>
+		<if test="order_id ! =null">
+			and order_id=#{order_id}
+		</if>
+	</select>
+	
+	<!-- 添加充值提现记录 -->
+	<insert id="insert" parameterType="com.daka.entry.RechargeLogVO">
+		insert into 
+		recharge_log_t(customer_id,create_time,type,
+		account,remark,order_id)
+		values(#{customerId},#{createTime},#{type},
+		#{account},#{remark},#{orderId})
+	</insert>
+
+    <!-- 待分红钱包 -->
+    <select id="selectRechargeLog" resultType="com.daka.entry.RechargeLogVO">
+        SELECT account, create_time, remark FROM recharge_log_t WHERE customer_id = #{id} AND type IN(${types})
+        UNION ALL
+        SELECT account, create_time, CASE type WHEN 2 THEN '二级返利' ELSE '三级返利' END
+        FROM rebate_log_t WHERE type IN(2,3) AND agent_id = #{id}
+        order by create_time DESC
+    </select>
+    
+    <select id="findAllByType" parameterType="java.util.Map" resultType="java.math.BigDecimal">
+    
+    	select IFNULL(sum(account),0) from recharge_log_t where customer_id=#{customerId} and type in(${type})
+    </select>
+
+	<select id="queryAccountByType" parameterType="java.lang.Integer" resultType="java.math.BigDecimal">
+		select sum(account) as account from recharge_log_t where customer_id=#{customerId} and type=1
+	</select>
+
+    <!--定时任务-->
+    <insert id="saveWalletTask">
+        INSERT INTO recharge_log_t
+            (customer_id, create_time, type, account, remark)
+        SELECT id, #{createTime}, #{type}, 0-waiting_dividends_wallet * #{rebate} , #{remark}
+        FROM customer_t WHERE state = 1
+    </insert>
+</mapper>

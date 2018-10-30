@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.daka.dao.goods.GoodsTypeDAO">
+    <!-- app商品类型查询 -->
+    <select id="queryAppGoodsType" resultType="com.daka.entry.GoodsTypeVO">
+        select * from goods_type_t
+    </select>
+    
+    <!--List<PageData> queryGoodslistPage(Page page); //分页查询-->
+	<select id="queryGoodsTypelistPage" parameterType="page" resultType="pd">
+		select id,type_name,type_img,state from goods_type_t where 1=1
+		<if test="pd.type_name!= null and pd.type_name != ''">
+			and type_name like CONCAT('%', #{pd.type_name}, '%')
+		</if>
+	</select>
+
+    <insert id="saveGoodsType" parameterType="com.daka.entry.GoodsTypeVO">
+        insert into goods_type_t
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="typeName != null">
+                type_name,
+            </if>
+            <if test="typeImg != null">
+                type_img,
+            </if>
+            <if test="state != null">
+                state,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="typeName != null">
+                #{typeName,jdbcType=VARCHAR},
+            </if>
+            <if test="typeImg != null">
+                #{typeImg,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null">
+                #{state,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    
+    <select id="queryGoodsTypeById" resultType="com.daka.entry.GoodsTypeVO">
+    	select * from goods_type_t where id = #{0}
+    </select>
+    
+    <update id="updateGoodsType" parameterType="com.daka.entry.GoodsTypeVO">
+    	update goods_type_t 
+    	<set>
+    		<if test="typeName !=null and typeName != ''">
+    			type_name = #{typeName},
+    		</if>
+    		<if test="typeImg !=null and typeImg != ''">
+    			type_img = #{typeImg},
+    		</if>
+    		<if test="state !=null and state != ''">
+    			state = #{state},
+    		</if>
+    	</set>
+    	where id=#{id}
+    </update>
+    
+    <select id="validateRepeat" resultType="int">
+    	select count(1) from goods_type_t where 1=1 
+    	<if test="name != null and name != ''">
+    		and type_name = #{name}
+    	</if>
+    	<if test="id != null and id != ''">
+    		and id != #{id}
+    	</if>
+    </select>
+    
+    <update id="delById">
+    	delete from goods_type_t where id=#{0}
+    </update>
+    
+    <select id="validateReference" resultType="int">
+    	select count(1) from goods_t where goods_type_id = #{0}
+    </select>
+</mapper>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.daka.dao.present.PresentDAO">
+
+    <select id="queryPresentlistPage" resultType="pd" parameterType="page">
+        SELECT
+        t1.*, t2.nick_name,
+        t2.`level`,
+        t2.phone,
+        sum(t3.account) AS account
+        FROM
+        present_t t1
+        LEFT JOIN customer_t t2 ON t1.customer_id = t2.id
+        LEFT JOIN recharge_log_t t3 ON t3.customer_id = t2.id
+        AND t3.type = 1
+        GROUP BY t3.customer_id
+        <if test="pd.nick_name!= null and pd.nick_name != ''">
+            and nick_name like CONCAT('%', #{pd.nick_name}, '%')
+        </if>
+    </select>
+
+    <select id="queryPersentById" parameterType="java.lang.Integer" resultType="java.util.Map">
+        SELECT t1.*,t2.nick_name,t2.`level`,t2.phone,sum(t3.account) as account FROM present_t t1 LEFT JOIN customer_t t2 ON t1.customer_id = t2.id
+        LEFT JOIN recharge_log_t t3 ON t3.customer_id = t2.id
+        where t1.id=#{id}
+    </select>
+
+    <update id="toUpdate" parameterType="com.daka.entry.PresentVO">
+        update present_t set state=#{state} where id=#{id}
+    </update>
+
+    <insert id="savePresent" parameterType="com.daka.entry.PresentVO">
+        insert into present_t (customer_id,order_no,create_time,receiving_address,state) values (#{customerId},#{orderNo},#{createTime},#{receivingAddress},#{state})
+    </insert>
+
+    <select id="queryStateByCustomerId" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+        select state from present_t where customer_id=#{customerId}
+    </select>
+</mapper>

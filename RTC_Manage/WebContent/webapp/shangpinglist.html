@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>商品列表</title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/base.css" rel="stylesheet" />
+		<link href="css/shangpinglist.css" rel="stylesheet" />
+	</head>
+	<body>
+		<div id="example" class="content ">
+			<div class="ssksxb">
+				<div class="ssk flexrow">
+					<div class="flexcolumn jcct">
+						<span  onClick="javascript:history.back(-1)" class="mui-icon mui-icon-back" style="font-size: 0.8rem;color: #fff;"></span>
+					</div>
+					
+					
+					<!--<div class="ssk flexrow">
+						<div class="inpus flexcolumn jcct">
+							<img class="search" src="images/shangcheng/sousuo.png"/>
+							<input type="text" placeholder="搜索关键字···" name="" id="" value=""/>
+						</div>
+						<div class="listqiehuan">
+							<img src="images/shangcheng/liebiao.png" alt="" />
+						</div>
+					</div>-->
+					<div class="inpus flexcolumn jcct pr">
+						<img class="search" src="images/shangcheng/sousuo.png" @click="sousuoinp"/>
+						<input v-model="goodsName" type="text" placeholder="搜索关键字···" v-model="goodsName" name="" id="" value=""/>
+						<!--<span @click="sousuoinp" class="sousuo mui-icon mui-icon-search"></span>-->
+					</div>
+					<div class="listqiehuan mui-text-right" @click="listqh">
+						<img src="images/shangcheng/liebiao.png" alt="" />
+					</div>
+				</div>
+				<div class="sxb flexrow">
+					<div @click="zhsx" class="active">综合</div>
+					<div @click="xlsx">销量</div>
+					<div @click="jgpx">价格</div>
+					<div @click="sxbtn">筛选</div>
+				</div>
+				<div v-show="butlists"  class="btnlists">
+					<div class="btnlist flexrow">
+						<div v-for="(itme,index) in shaixuanbtns">
+							<button @click="xuanxiamg(index)" :class="{active:itme.isxuanze}">{{itme.tit}}</button>
+						</div>
+						
+					</div>
+					<div class="flexrow jcsb">
+						<button class="cancel" @click="qxsx">取消筛选</button>
+						<button class="red" @click="qrsx">确认</button>
+					</div>
+				</div>
+				
+			</div>
+			<div id="lists" class="" >
+				<div class="flexrow " :class="{shangpinlist : isrow, shangpinlistrow:!isrow}">
+					<div v-for="item in msg">
+						<div class="flexrow ">
+							<div class="tupian"  :data-spid="item.id">
+								<img :src="item.goodsAttachmentContent" alt="" />
+							</div>
+							<div class="jies flexcolumn jcsa">
+								<p>
+									{{item.goodsName}}
+								</p>
+								<div class="price">
+									￥ {{item.goodsDiscountPrice}}
+								</div>
+								<div>
+									<button  @click.stop="tmpddxq(item.id)">立即购买</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="jzsj" @click="jzsj">{{isjzsj?'加载数据···':'没有数据了···'}}</div>
+			
+			<div  v-if="butlists"  class="tanchuang"></div>
+		</div>
+		
+	
+		<script src="js/jquery.min.js"></script>
+		<script src="js/base.js"></script>
+		<script src="js/vue.js"></script>
+		<script src="js/mui.min.js"></script>
+		<script src="js/ajax1.js"></script>
+		<script src="js/shangpinlist.js"></script>
+		<script>
+			
+		</script>
+	</body>
+
+</html>

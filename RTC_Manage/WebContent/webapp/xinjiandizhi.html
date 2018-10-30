@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>添加地址</title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/base.css" rel="stylesheet" />
+		<link href="css/mimaxiugai.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="css/app.css" />
+		<link href="css/mui.picker.css" rel="stylesheet" />
+		<link href="css/mui.poppicker.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="css/mui.picker.min.css" />
+	</head>
+	<body>
+		<div id="example" class="content t">
+			<div class="yemianbiti bg phoneblock">
+				<a onClick="javascript:history.back()" class="fanhuiyige mui-icon mui-icon-back"></a>
+				添加地址
+			</div>
+			
+			<div class="card">
+				<div  class="flexrow jcsb">
+					<div class="flexcolumn jcct">
+						收件人
+					</div>
+					<div>
+						<input v-model="sjr" type="text" placeholder="请输入姓名"  name="" id="" value="" /> 
+					</div>
+				</div>
+				
+			
+				<div  class="flexrow jcsb">
+					<div class="flexcolumn jcct">
+						联系电话
+					</div>
+					<div>
+						<input type="text" v-model="pone" placeholder="请输入手机号" maxlength="11" name="" id="" value="" /> 
+					</div>
+				</div>
+			
+				<div  class="flexrow jcsb">
+					<div class="flexcolumn jcct">
+						所在地区
+					</div>
+					<div>
+						<input id='showCityPicker3' v-model="diq" type="text" readonly="readonly" name="" id="" placeholder="请选择所在地区" /> 
+					</div>
+				</div>
+				
+				<div  class="flexrow jcsb">
+					<div class="flexcolumn jcct">
+						详细信息
+					</div>
+					<div>
+						<input type="text" v-model="xxdz" placeholder="请输入详细街道、楼牌号" maxlength="50" name="" id="" value="" /> 
+					</div>
+				</div>
+				<div  class="flexrow jcsb">
+					<div class="flexcolumn jcct">
+						设置默认地址
+					</div>
+					<div>
+						<div class="mui-switch mui-switch-mini">
+						  <div class="mui-switch-handle"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div v-if="dzid != ''" @click="scdz" class="card" style="color: #fe2500;padding: .3rem;">
+				删除收货地址
+			</div>
+			
+			<div style="width: 80%;margin-left: 10%;">
+				<button class="btn" @click="bcdz">保存地址</button>
+			</div>
+			
+		</div>
+	
+		<script src="js/jquery.min.js"></script>
+		<script src="js/base.js"></script>
+		<script src="js/vue.js"></script>
+		<script src="js/mui.min.js"></script>
+		<script src="js/ajax1.js"></script>
+		<script src="js/mui.picker.js"></script>
+		<script src="js/mui.poppicker.js"></script>
+		<script src="js/city.data.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/city.data-3.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/mui.picker.min.js"></script>
+		<script src="js/tianjiadizhi.js"></script>
+		<script>
+				mui.init();
+				mui.ready(function() {
+					/**
+					 * 获取对象属性的值
+					 * 主要用于过滤三级联动中，可能出现的最低级的数据不存在的情况，实际开发中需要注意这一点；
+					 * @param {Object} obj 对象
+					 * @param {String} param 属性名
+					 */
+					var _getParam = function(obj, param) {
+						return obj[param] || '';
+					};
+					
+					//-----------------------------------------
+					//					//级联示例
+					var cityPicker3 = new mui.PopPicker({
+						layer: 3
+					});
+					cityPicker3.setData(cityData3);
+					var showCityPickerButton = document.getElementById('showCityPicker3');
+					//var cityResult3 = doc.getElementById('cityResult3');
+					showCityPickerButton.addEventListener('tap', function(event) {
+						cityPicker3.show(function(items) {
+						var chengshi = _getParam(items[0], 'text') + " " + _getParam(items[1], 'text') + " " + _getParam(items[2], 'text');
+						//console.log(chengshi);
+						//showCityPickerButton.value(chengshi);
+							valzhi(showCityPickerButton,chengshi);
+							//返回 false 可以阻止选择框的关闭
+							//return false;
+						});
+					}, false);
+				});
+				
+				
+				
+				
+				function valzhi(doc,data){
+//					$(doc).val(data);
+					dz.diq = data;
+				}
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>联系客服</title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/base.css" rel="stylesheet" />
+		<link href="css/tiyanjin.css" rel="stylesheet" />
+	</head>
+	<body>
+		<div id="example" class="content t">
+			<div class="yemianbiti bg phoneblock">
+				<a onClick="javascript:history.back(-1)" class="fanhuiyige mui-icon mui-icon-back"></a>
+				联系客服
+			</div>
+			<div class="card flexrow jcsb">
+				<div class="flexcolumn jcct">微信客服4</div>
+				<div class=" flexcolumn jcct">k570228555</div>
+				<div class="copyBtn" data-clipboard-text="k570228555">复制</div>
+			</div>
+			<div class="card flexrow jcsb">
+				<div class="flexcolumn jcct">微信客服5</div>
+				<div class=" flexcolumn jcct">wc5658588</div>
+				<div class="copyBtn" data-clipboard-text="wc5658588">复制</div>
+			</div>
+			<div class="card flexrow jcsb">
+				<div class="flexcolumn jcct">微信客服6</div>
+				<div class=" flexcolumn jcct">MikeTi999</div>
+				<div class="copyBtn" data-clipboard-text="MikeTi999">复制</div>
+			</div>
+			
+			
+		</div>
+	
+		<script src="js/jquery.min.js"></script>
+		<script src="js/base.js"></script>s
+		<script src="js/mui.min.js"></script>
+		<script src="js/clipboard.min.js"></script>
+		<script>
+			var clipboard = new ClipboardJS('.copyBtn');
+
+		    clipboard.on('success', function(e) {
+		       // console.log(e);
+		       mui.toast('复制成功！')
+		    });
+		
+		    clipboard.on('error', function(e) {
+		      //  console.log(e);
+		      mui.toast('复制失败！')
+		    });
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.daka.dao.bonus.BonusLogDAO">
+
+    <select id="queryBonuslistPage" parameterType="page" resultType="pd">
+        SELECT t2.nick_name,t2.phone,t2.level,t1.* FROM bonus_log_t t1 INNER JOIN customer_t t2 ON t1.customer_id = t2.id
+		where 1=1
+        <if test="pd.nick_name!= null and pd.nick_name != ''">
+            and nick_name like CONCAT('%', #{pd.nick_name}, '%')
+        </if>
+    </select>
+
+    <!-- 分红钱包 -->
+    <select id="selectBonusList" resultType="com.daka.entry.BonusLogVO">
+        SELECT account, create_time, remark FROM bonus_log_t WHERE customer_id = #{id} AND type IN(${types})
+        UNION ALL
+        SELECT account, create_time, '一级返利' FROM rebate_log_t WHERE type = 1 AND agent_id = #{id}
+        order by create_time DESC
+    </select>
+    
+    <insert id="insert" parameterType="com.daka.entry.BonusLogVO">
+    	insert into bonus_log_t(customer_id,account,create_time,type,remark) values(#{customerId},
+    	#{account},#{createTime},#{type},#{remark})
+    </insert>
+    
+    <!-- 查询用户的分红钱包的记录 -->
+    <select id="findAllBycusid" parameterType="java.lang.Integer" resultType="java.math.BigDecimal">
+    	select sum(account) from bonus_log_t where customer_id=#{customerId}
+    </select>
+
+    <!--定时任务-->
+    <insert id="saveWalletTask">
+        INSERT INTO bonus_log_t
+            (customer_id, create_time, type, account, remark)
+        SELECT id, #{createTime}, #{type}, waiting_dividends_wallet * #{rebate} * #{proportion} , #{remark}
+        FROM customer_t WHERE state = 1
+    </insert>
+</mapper>

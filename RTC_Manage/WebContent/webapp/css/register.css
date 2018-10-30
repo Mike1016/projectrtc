@@ -1,0 +1,86 @@
+::-webkit-input-placeholder { /* Chrome */
+  color: #fff;
+  opacity: 1;
+}
+:-ms-input-placeholder { /* IE 10+ */
+  color: #fff;
+  opacity: 1;
+}
+::-moz-placeholder { /* Firefox 19+ */
+  color: #fff;
+  opacity: 1;
+}
+:-moz-placeholder { /* Firefox 4 - 18 */
+  color: #fff;
+  opacity: 1;
+}
+.content{
+	background: url(../images/login/beijing.jpg);
+	background-size: 100% 100%;
+	color:#fff;
+}
+.logo{
+	width: 2.73rem;
+	margin: 0.7rem auto 0.8rem;
+}
+.inptkuag{
+	width: 80%;
+	margin-left: 10%;
+}
+.srk{
+	line-height: 1.55rem;
+	width: 100%;
+	border-bottom: 1px solid #fff;
+}
+.tb{
+	width: 8%;
+	margin-left: 3%;
+}
+.tb img{
+	vertical-align: middle;
+  margin-top: -0.2rem;
+}
+.inpt{
+	width: 89%;
+}
+.btnkuang{
+	width: 80%;
+	margin:auto;
+	padding-top: 0.6rem;
+	text-align: center;
+	color: #fff;
+	font-size: 0.45rem;
+}
+.btnkuang>a{
+	color: #2191D8;
+	vertical-align: baseline;
+	font-size: 0.45rem;
+}
+.denglu{font-size: 0.45rem;}
+
+.register.btn{
+	background-color: transparent;
+	line-height: 1.18rem;
+	border: 0.04rem solid #fff;
+}
+.zc{
+	background-color: #fffae3;
+	color: #955e2f;
+}
+.btn{
+	line-height: 1rem;
+	padding: 0;
+	font-size: 0.45rem;
+}
+.yzm{
+	top: 15%;
+	right: 3%;
+	width: 2rem;
+	height: 1rem;
+}
+.dxyz{
+	border: none;
+  background-color: transparent;
+  font-size: 0.4rem;
+  padding: 0;
+}

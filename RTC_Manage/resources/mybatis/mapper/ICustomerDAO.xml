@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.daka.dao.customer.CustomerDAO">
+
+    <!--List<PageData> queryCustomerlistPage(Page page); //分页查询-->
+    <select id="queryCustomerlistPage" parameterType="page" resultType="pd">
+        select * from customer_t
+        where 1=1
+        <if test="pd.nick_name!= null and pd.nick_name != ''">
+            and nick_name like CONCAT('%', #{pd.nick_name}, '%')
+        </if>
+        <if test="pd.registerTimeFrom!= null and pd.registerTimeFrom != ''
+        and pd.registerTimeTo!= null and pd.registerTimeTo != ''">
+            and regester_time BETWEEN #{pd.registerTimeFrom} AND #{pd.registerTimeTo}
+        </if>
+        <if test="pd.activationTimeFrom!= null and pd.activationTimeFrom != ''
+        and pd.activationTimeTo!= null and pd.activationTimeTo != ''">
+            and activation_time BETWEEN #{pd.activationTimeFrom} AND #{pd.activationTimeTo}
+        </if>
+    </select>
+
+    <select id="queryCustomerById" parameterType="java.lang.Integer" resultType="com.daka.entry.CustomerVO">
+		select * from customer_t where id = #{id}
+	</select>
+	
+	
+	<select id="findByCode" parameterType="java.lang.String" resultType="com.daka.entry.CustomerVO">
+		select * from customer_id where extension_code=#{extensionCode}
+	</select>
+
+    <!-- 根据id、agentId、opendId、phone、extensionCode、level查询用户或者用户集合 -->
+    <select id="findByCustomer" parameterType="com.daka.entry.CustomerVO" resultType="com.daka.entry.CustomerVO">
+        select * from customer_t where 1=1
+        <if test="id !=null">
+            and id=#{id}
+        </if>
+        <if test="agentId !=null">
+            and agent_id=#{agentId}
+        </if>
+        <if test="opendId !=null">
+            and opend_id=#{opendId}
+        </if>
+        <if test="phone !=null">
+            and phone=#{phone}
+        </if>
+        <if test="password !=null">
+            and password=#{password}
+        </if>
+        <if test="extensionCode !=null">
+            and extension_code=#{extensionCode}
+        </if>
+        <if test="level !=null">
+            and level=#{level}
+        </if>
+    </select>
+
+    <!-- 注册新用户 -->
+    <insert id="insertCustomer" parameterType="com.daka.entry.CustomerVO">
+		insert into 
+		customer_t(id,agent_id,level,phone,extension_code,
+		password,security_password,regester_time,nick_name) 
+		values(#{id},#{agentId},#{level},
+		#{phone},#{extensionCode},#{password},#{securityPassword},
+		#{regesterTime},#{nickName})
+	</insert>
+
+    <update id="updateByCustomer" parameterType="com.daka.entry.CustomerVO">
+        update customer_t
+        <trim prefix="set" suffixOverrides=",">
+            <if test="agentId != null and agentId != ''">
+                agent_id=#{agentId},
+            </if>
+            <if test="opendId != null and opendId != ''">
+                opend_id=#{opendId},
+            </if>
+            <if test="nickName != null and nickName != ''">
+                nick_name=#{nickName},
+            </if>
+            <if test="level != null and level != ''">
+                level=#{level},
+            </if>
+            <if test="headImg != null and headImg != ''">
+                head_img=#{headImg},
+            </if>
+            <if test="alipay != null and alipay != ''">
+                alipay=#{alipay},
+            </if>
+            <if test="city != null and city != ''">
+                city=#{city},
+            </if>
+            <if test="birthday != null and birthday != ''">
+                birthday=#{birthday},
+            </if>
+            <if test="identityCard != null and identityCard != ''">
+                identity_card=#{identityCard},
+            </if>
+            <if test="phone != null and phone != ''">
+                phone=#{phone},
+            </if>
+            <if test="extensionCode != null and extensionCode != ''">
+                extension_code=#{extensionCode},
+            </if>
+            <if test="password != null and password != ''">
+                password=#{password},
+            </if>
+            <if test="securityPassword != null and securityPassword != ''">
+                security_password=#{securityPassword},
+            </if>
+            <if test="regesterTime != null and regesterTime != ''">
+                regester_time=#{regesterTime},
+            </if>
+            <if test="teamAchievement != null and teamAchievement != ''">
+                team_achievement=#{teamAchievement},
+            </if>
+            <if test="waitingDividendsWallet != null ">
+                waiting_dividends_wallet=#{waitingDividendsWallet},
+            </if>
+            <if test="dividendsWallet != null and dividendsWallet != ''">
+                dividends_wallet=#{dividendsWallet},
+            </if>
+            <if test="rebateWallet != null and rebateWallet != ''">
+                rebate_wallet=#{rebateWallet},
+            </if>
+            <if test="tastesMoney != null">
+                tastes_money=#{tastesMoney},
+            </if>
+            <if test="shoppingCoin != null and shoppingCoin != ''">
+                shopping_coin=#{shoppingCoin},
+            </if>
+            <if test="originalWallet != null and originalWallet !=''">
+                original_wallet=#{originalWallet}
+            </if>
+            <if test="state != null and state != ''">
+                state=#{state},
+            </if>
+            <if test="status != null and status != ''">
+                status=#{status},
+            </if>
+            <if test="activationTime != null and activationTime != ''">
+                activation_time=#{activationTime},
+            </if>
+            <if test="recommendBonus != null and recommendBonus != ''">
+                recommend_bonus=#{recommendBonus},
+            </if>
+        </trim>
+        where id=#{id}
+    </update>
+
+
+    <update id="toUpdate" parameterType="com.daka.entry.CustomerVO">
+        update customer_t
+        <trim prefix="set" suffixOverrides=",">
+            <if test="nickName != null and nickName != ''">
+                nick_name=#{nickName},
+            </if>
+            <if test="password != null and password != ''">
+                password=#{password},
+            </if>
+            <if test="level != null and level != ''">
+                level=#{level},
+            </if>
+            <if test="phone != null and phone != ''">
+                phone=#{phone},
+            </if>
+        </trim>
+        where id=#{id}
+    </update>
+
+    <!--void updateState1(Integer id); //根据id修改状态码，即是否封号-->
+    <update id="updateState1" parameterType="java.lang.Integer">
+		update customer_t set state = 2,activation_time='' where id = #{id}
+	</update>
+
+    <!--void updateState2(Integer id); //根据id修改状态码，即是否解封-->
+    <update id="updateState2" parameterType="java.lang.Integer">
+		update customer_t set state = 0 where id = #{id}
+	</update>
+
+    <!--void deleteById(Integer id); //删除用户信息-->
+    <delete id="deleteById" parameterType="java.lang.Integer">
+		delete from customer_t where id = #{id}
+	</delete>
+
+    <!-- 会员中心 -->
+    <select id="selectMemberCenter" resultType="com.daka.entry.dto.CustomerDTO">
+        SELECT
+            A.nick_name, IFNULL(A.head_img, '') AS head_img, CONCAT(A.`level`, '级') AS `level`, A.phone, A.state,
+            A.tastes_money, A.rebate_wallet, A.dividends_wallet, A.shopping_coin, A.team_achievement,
+            IFNULL(A.identity_card, '') AS identity_card,
+            IFNULL(A.alipay, '') AS alipay,
+            IFNULL(A.birthday, '') AS birthday,
+            IFNULL(A.city, '') AS city,
+            (A.dividends_wallet + A.rebate_wallet) AS wallet,
+            A.waiting_dividends_wallet,
+            A.avalible_dir_team_count AS pushCount,
+            A.avalible_team_count AS teamCount
+        FROM
+            customer_t A WHERE A.id = #{id}
+    </select>
+
+    <!--List<CustomerVO> queryExtension(Integer id); //查询直属推广-->
+    <select id="queryExtension" parameterType="java.lang.Integer" resultType="com.daka.entry.CustomerVO">
+		SELECT * FROM customer_t WHERE agent_id = #{id}
+	</select>
+
+    <select id="queryTeam" parameterType="java.lang.String" resultType="com.daka.entry.CustomerVO">
+		select * from customer_t where id in (${ids})
+	</select>
+
+    <!-- 查询子级 -->
+    <!-- Integer queryChild(Integer id); -->
+    <select id="queryChild" resultType="java.lang.String" parameterType="java.lang.Integer">
+		select getChildLst(#{id})
+	</select>
+
+    <!-- 查询父级 -->
+    <select id="queryParent" resultType="java.lang.String" parameterType="java.lang.Integer">
+		select getParentLst(#{id})
+	</select>
+
+    <update id="updateCodeById" parameterType="com.daka.entry.CustomerVO">
+        update customer_t set code=#{code},state=1,tastes_money=0,waiting_dividends_wallet=#{waitingDividendsWallet} where id=#{id}
+    </update>
+
+    <resultMap id="getChild" type="com.daka.entry.dto.CustomerDTO">
+        <collection property="childs" select="selectTeam" column="id"></collection>
+    </resultMap>
+
+    <select id="selectTeam" resultMap="getChild">
+        SELECT id, phone, state FROM customer_t WHERE agent_id = #{id}
+    </select>
+
+    <!--团队业绩-->
+    <update id="updateTeamAchievement">
+        UPDATE customer_t SET team_achievement = team_achievement + #{account} WHERE 1=1 ${parentIds} AND state = 1
+    </update>
+
+    <!--第一代返利分红-->
+    <update id="updateDividendsWallet" parameterType="int">
+        UPDATE customer_t SET dividends_wallet = dividends_wallet + #{account} WHERE id = #{id} AND state = 1
+    </update>
+
+    <!--第二、三代返利待分红-->
+    <update id="updatewaitingividendDsWallet" parameterType="int">
+        UPDATE customer_t SET waiting_dividends_wallet = waiting_dividends_wallet + #{account}
+        WHERE id = #{id} AND state = 1
+    </update>
+
+    <!--获取三代ID-->
+    <select id="selectGeneration" parameterType="int" resultType="com.daka.entry.dto.CustomerDTO">
+       SELECT
+            A.id,
+            IF((SELECT COUNT(1) FROM customer_t E WHERE E.agent_id = B.id AND E.state = 1 AND B.state = 1) > 0, B.id, NULL) AS ID1,
+            IF((SELECT COUNT(1) FROM customer_t E WHERE E.agent_id = C.id AND E.state = 1 AND C.state = 1) > 1, C.id, NULL) AS ID2,
+            IF((SELECT COUNT(1) FROM customer_t E WHERE E.agent_id = D.id AND E.state = 1 AND D.state = 1) > 2, D.id, NULL) AS ID3
+        FROM
+            customer_t A
+        LEFT JOIN customer_t B ON A.agent_id = B.id
+        LEFT JOIN customer_t C ON B.agent_id = C.id
+        LEFT JOIN customer_t D ON C.agent_id = D.id
+        WHERE
+            A.id = #{id}
+    </select>
+
+    <update id="updateShoppingCoin" parameterType="com.daka.entry.CustomerVO">
+        update customer_t as ct set ct.shopping_coin = ct.shopping_coin + #{shoppingCoin} where id = #{id}
+    </update>
+
+    <update id="updateShoppingCoinToPay" parameterType="com.daka.entry.CustomerVO">
+        update customer_t as ct set ct.shopping_coin = ct.shopping_coin - #{shoppingCoin} where id = #{id}
+    </update>
+
+    <!--定时任务-->
+    <update id="saveWalletTask">
+        UPDATE customer_t
+        SET dividends_wallet = dividends_wallet + waiting_dividends_wallet * #{rebate} * #{proportion},
+        shopping_coin = shopping_coin + waiting_dividends_wallet * #{rebate} * (1 - #{proportion}),
+        waiting_dividends_wallet = waiting_dividends_wallet - waiting_dividends_wallet * #{rebate}
+        WHERE state = 1
+    </update>
+
+    <select id="findByPhone" parameterType="java.lang.String" resultType="com.daka.entry.CustomerVO">
+        select  * from customer_t where phone=#{phone}
+    </select>
+    
+    <select id="selectParentCustomerVo" parameterType="java.lang.String" resultType="com.daka.entry.CustomerVO">
+        SELECT
+			*
+		FROM
+			customer_t
+		WHERE
+			id = (
+					SELECT
+						ifnull(agent_id,-1)
+					FROM
+						customer_t
+					WHERE
+						id = #{0} 
+				)
+    </select>
+    
+    <update id="updateParentDividendsWallet" parameterType="com.daka.entry.CustomerVO">
+    	update customer_t set dividends_wallet=dividends_wallet+2 where id = #{id}
+    </update>
+    
+    <update id="updateDirParentCount">
+    	update customer_t set avalible_dir_team_count = avalible_dir_team_count+1 where id=#{0}
+    </update>
+    
+    <update id="updateAllParentCount">
+    	update customer_t set avalible_team_count = avalible_team_count+1 where 1=1 ${ids}
+    </update>
+    
+    <select id="findByExtension" parameterType="java.lang.String" resultType="com.daka.entry.CustomerVO">
+    	select * from customer_t where extension_code=#{extensionCode}
+    </select>
+    
+    <update id="activationCustomer" parameterType="java.lang.Integer">
+    	update customer_t set state = 1,activation_time=now() where id=#{id}
+    </update>
+
+	<!-- 查询用户累计充值金额、提现金额 -->
+	<select id="cumulativeRecord" parameterType="java.lang.Integer" resultType="com.daka.entry.dto.CustomerDTO">
+		SELECT
+			r.rechargeAccount,
+			b.presentationAccount
+		FROM
+			(
+		SELECT
+			IFNULL(SUM(account), 0) AS rechargeAccount,
+			customer_id
+		FROM
+			recharge_log_t
+		WHERE
+			type = 1
+		GROUP BY
+			customer_id
+			) AS r
+		LEFT JOIN (
+		SELECT
+			IFNULL(SUM(account), 0) AS presentationAccount,
+			customer_id
+		FROM
+			bonus_log_t
+		WHERE
+			type = 4
+		GROUP BY
+			customer_id
+		) AS b ON r.customer_id = b.customer_id
+		WHERE
+			r.customer_id = #{id}
+	</select>
+
+</mapper>

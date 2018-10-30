@@ -1,0 +1,209 @@
+.content{
+	background: url(../images/my/bg.png) no-repeat center;
+	background-position: 100%;
+}
+.card {
+    margin: 0.3rem 0.3rem;
+    padding: 0; 
+}
+.ziliaozhanshi{
+	position: absolute;
+	top: 0.5rem;
+	color: #fff;
+	width: 100%;
+}
+.ziliaozhanshi>div>p{
+	color: #fff;
+	text-align: center;
+	letter-spacing: 1px;
+}
+.zlbtn{
+	width: 20%;
+}
+.touxiang{
+	width: 16%;
+	margin: 0.1rem 0 0.1rem;
+	margin-left: 42%;
+	
+}
+.zlbtm{
+	width: 100%;
+	position: absolute;
+	bottom: 0;
+	padding: 0.24rem 0;
+}
+.zlbtm>div{
+	width: 25%;
+	padding: 0 0.07rem;
+}
+.box{
+	background-color: rgba(255,255,255,0.2);;
+	border-radius: 0.2rem;
+	padding: 0.15rem 0;
+}
+.zlbtm>div:first-child{
+	border-left:none;
+}
+.tit{
+	text-align: center;
+	color: #fff;
+}
+.sj{
+	text-align: center;
+	color: #2191D8;
+	margin-top: 0.05rem;
+}
+.top{
+	font-size: 0.4rem;
+	font-weight: 500;
+	padding: 0.2rem ;
+	border-bottom: 1px solid #ddd;
+}
+.xqbtn>div{
+	width: 33.33%;
+	/*margin: 0.1rem 0;*/
+	text-align: center;
+	line-height:2.9rem;
+	border-top:2px solid #000;
+	border-right:2px solid #000;
+}
+.xqbtn>div.no-rigtht{
+	border-right: none;
+}
+.xqbtn>div.no-top{
+	border-top: none;
+}
+.xqbtn>div img{width: 50%;}
+.top>img{
+	width: 1.1rem;
+}
+.list>.top:last-child{
+	border-bottom: none;
+}
+.tanchuang{
+	display: none;
+	color: #333;
+}
+.nr{
+	width: 7rem;
+	position: absolute;
+	top: 30%;
+	left: 15%;
+	z-index: 100;
+	display: none;
+	background-image: -webkit-linear-gradient(90deg, #c712ff, #1f54ff);
+	background-image: -moz-linear-gradient(90deg, #c712ff, #1f54ff);
+	background-image: linear-gradient(90deg, #c712ff, #1f54ff);
+	border-radius: 10px;
+}
+
+
+.inside-border {
+    width: 6.87rem;
+    height: 98%;
+    background-color: #171e2e;
+    border-radius: 6px;
+    margin: 0.85% auto;
+    padding: 0 0.1rem;
+}
+.tops{
+	text-align: center;
+	padding: 0.3rem 0;
+	/*border-bottom: 1px solid #dcdcdc;*/
+	margin-bottom: 0.2rem;
+	padding: 0.3rem 0;
+}
+.line{
+	height: 1px;
+	width: 100%;
+	background-image: -webkit-linear-gradient(0deg, #c712ff, #1f54ff);
+}
+.mui-radio.mui-left label {
+    padding-right: 15px;
+    padding-left: 40px;
+}
+.mui-checkbox label, .mui-radio label {
+    display: inline-block;
+    float: none;
+    width: 100%;
+    padding-right: 46px;
+}
+.an{
+	/*border-top: 1px solid #dcdcdc;*/
+	padding: 0.1rem 0;
+}
+.an>div{
+	width: 50%;
+	text-align: center;
+	padding: 0.3rem 0;
+}
+.an>div:first-child{
+	border-right: 1px solid #dcdcdc;
+}
+
+.mui-checkbox input[type=checkbox]:checked:before, .mui-radio input[type=radio]:checked:before {
+    color: #007aff;
+}
+.mui-checkbox input[type=checkbox]:before, .mui-radio input[type=radio]:before {
+    font-family: Muiicons;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1;
+    text-decoration: none;
+    color: #aaa;
+    border-radius: 0;
+    background: 0 0;
+    -webkit-font-smoothing: antialiased;
+}
+
+.mui-input-row label {
+    padding: 6px 15px;
+}
+
+
+.remind{
+	margin: 0 0.3rem;
+	font-size: 0.4rem;
+}
+input.ftje{
+	width: 3rem;
+	border:1px solid #fff;
+	padding: 0 0.1rem;
+	height: 0.8rem;
+	border-radius: 0.2rem;
+}
+.mui-popup-button{color: #000;}
+.mui-popup-button.mui-popup-button-bold{font-weight: normal;}
+.mui-icon-forward{
+	margin-top: 0.15rem;
+}
+
+.middle{
+	position: absolute;
+	top: 4.2rem;
+	width: 100%;
+	padding: 0 2.4rem;
+}
+.middle .mid-items{width: 50%;}
+.mid-items>span{
+	background-color: #2191D8;
+	color: #fff;
+	display: inline-block;
+	width: 1.3rem;
+	text-align: center;
+	margin-left: -0.15rem;
+	font-size: 0.32rem;
+	line-height: 0.5rem;
+	border-radius: 0.25rem;
+}
+#example{
+	height: 100%;
+	overflow-y: auto;
+}
+.wechat{
+	width: 80%;
+	line-height: 0.4rem;
+	padding-left: 0.3rem;
+}
+.wechat p{font-size: 0.35rem;color: #2191D8;}
+.wechat span{font-size: 0.35rem;}

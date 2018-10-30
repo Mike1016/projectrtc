@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>收货地址</title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/base.css" rel="stylesheet" />
+		<link href="css/tiyanjin.css" rel="stylesheet" />
+	</head>
+	<body>
+		<div id="example" class="content t f">
+			<div class="yemianbiti bg phoneblock">
+				<a  onClick="javascript:history.back()" class="fanhuiyige mui-icon mui-icon-back"></a>
+				收货地址
+			</div>
+			
+			<div v-if="list[0]" class="card" v-for="(item,index) in list">
+				<div class="flexrow jcsb">
+					<p>{{item.addressee}}</p>
+					<p>{{item.contactNo}}</p>
+					<p @click="bjdz(index)"><span class="mui-icon mui-icon-compose" style="vertical-align: bottom;"></span>编辑</p>
+				</div>
+				<div class="flexrow jcsb">
+					<div class="flexrow" style="width: 80%;">
+						<!--<span class="mui-icon mui-icon-location" style="vertical-align: bottom;"></span>-->
+						<div><img style="width: 1rem;" src="images/shangcheng/dizhi.png"/></div>
+						<p class="location">{{item.receivingAddress}} {{item.whichLocated}}</p>
+					</div>
+					<div>
+						<span v-if="item.state ==1" class="ztbtn btnfs">默认</span>
+					</div>
+				</div>
+			</div>
+			<div v-else><img src="images/shangcheng/shdzk.png" alt="" /></div>
+			<div class="tjdzbtn">
+				<button class="btn" @click="tjdz">新建地址</button>
+			</div>
+			
+		</div>
+	
+		<script src="js/jquery.min.js"></script>
+		<script src="js/base.js"></script>
+		<script src="js/mui.min.js"></script>
+		<script src="js/ajax1.js"></script>
+		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/shouhuodizhi.js" type="text/javascript" charset="utf-8"></script>
+		
+	</body>
+
+</html>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.daka.dao.rebate.RebateLogDAO">
+
+    <!-- 查询佣金钱包 -->
+    <select id="selectRebateList" parameterType="int" resultType="com.daka.entry.dto.RebateLogDTO">
+        SELECT A.type, B.phone, A.account, A.create_time
+        FROM rebate_log_t A LEFT JOIN customer_t B ON A.agent_id = B.id
+        WHERE A.agent_id = #{id}
+        ORDER BY A.create_time DESC
+    </select>
+
+    <insert id="insertRebate" parameterType="com.daka.entry.RebateLogVO">
+        INSERT INTO rebate_log_t (customer_id, agent_id, type, account, create_time)
+        VALUES (#{customerId}, #{agentId}, #{type}, #{account}, #{createTime})
+    </insert>
+
+    <select id="findAllRebateByType" resultType="com.daka.entry.RebateLogVO">
+        select type,SUM(account) as account FROM rebate_log_t where create_time between #{beginTime} and
+        #{endTime}
+
+        <if test="type!=null">
+            and type = #{type}
+        </if>
+        GROUP BY type;
+    </select>
+
+</mapper>

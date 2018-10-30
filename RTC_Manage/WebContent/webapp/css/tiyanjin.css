@@ -1,0 +1,118 @@
+.content{
+	height: 100%;
+}
+.txtbu{
+	color: #fe2500;
+}
+.jihbtn{
+	display: inline-block;
+	width: 1.6rem;
+	text-align: center;
+	line-height: 0.8rem;
+	color: #fff;
+	background-color: #fe2500;
+	border-radius: 5px;
+	outline: none;
+	border: none;
+	font-size: 0.35rem;
+}
+.copyBtn{
+	width: 1.8rem;
+	line-height: 0.7rem;
+	text-align: center;
+	color: #fff;
+	background-color: #fe2500;
+	border-radius: 0.35rem;
+	outline: none;
+	border: none;
+}
+.liebiaokuang{
+	min-height: 86%;
+	padding: 0.3rem 0;
+}
+.liebiaokuang>div{
+	padding: 0.2rem 0.3rem;
+	border-bottom: 1px solid #EEEEEE;
+}
+.ytsj>div{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+.ztbtn{
+	display: inline-block;
+	width: 1.6rem;
+	text-align: center;
+	line-height: 0.8rem;
+	/*padding: 0.1rem 0.4rem;*/
+	font-size: 0.35rem;
+	color: #666;
+	border-radius: 5px;
+}
+.default{
+	padding: 0.1rem 0.3rem;
+	font-size: 0.35rem;
+	color: #fff;
+	border-radius: 3px;
+}
+.btnbul{
+	background-color: #fe2500;
+	color: #fff;
+}
+.btnfs{
+	background-color: #fe2500;
+}
+.jhzt{
+	color: #fe2500;font-weight: 900;
+}
+.wjhzt{
+	color: #ddd;font-weight: 900;
+}
+.wjhbtn{
+	background-color: #ddd;
+}
+.mingc{
+	width: 25%;
+	text-align: center;
+}
+.zhangh{
+	width: 30%;
+	text-align: center;
+}
+.chongz{
+	width: 25%;
+	text-align: center;
+}
+.mingc>img{
+	width: 70%;
+}
+.mingc>span{
+	display:inline-block;
+	margin: 0.2rem 0;
+	width: 40px;
+	height: 40px;
+	line-height: 40px;
+	background-color:#2191D8 ;
+	border-radius: 50%;
+	color: #fff;
+}
+.tjdzbtn{
+	width: 100%;
+	padding: 5% 10%;
+	background-color:transparent;
+	position: fixed;
+	bottom: 0;
+}
+.btn{
+	background-color: #fe2500;
+	line-height: 1rem;
+	padding: 0;
+}
+.location{
+	width: 86%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	line-height: 0.8rem;
+	margin-left: 0.2rem;
+}

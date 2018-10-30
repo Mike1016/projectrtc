@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>收银台</title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/base.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="css/gouwuche.css"/>
+	</head>
+	<body>
+		<div id="example" class="content t ">
+			<div class="yemianbiti bg phoneblock">
+				<a onClick="javascript:history.back(-1)" class="fanhuiyige mui-icon mui-icon-back"></a>
+				收银台
+			</div>
+			<div class="card bord">
+				<div class="flexrow jcsb" style="padding: 0.2rem 0;">
+					<span>订单编号</span>
+					<span>{{ddlist.orderNo}}</span>
+				</div>
+				<div class="flexrow jcsb" style="padding: 0.2rem 0;">
+					<span>订单金额</span>
+					<span style="color: #fe2500;">￥{{ddlist.needToPay}}</span>
+				</div>
+			</div>
+			<div class="card">
+				<div class="listtop flexrow" @click="zhifu" style="padding: 0.3rem 0;">
+					<div class="tupian" style="width: 15%;"><img src="images/shangcheng/shangcheng.png" alt="" /></div>
+					<div class="toptit" style="width: 75%;">
+						<p>商城币支付</p>
+						<p>当前游戏币：<span style="color: #fe2500;">￥{{ddlist.myShoppingCoin}}</span></p>
+					</div>
+					<div class="flexcolumn jcct">
+						<span class="mui-icon mui-icon-forward"></span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script src="js/jquery.min.js"></script>
+		<script src="js/base.js"></script>
+		<script src="js/mui.min.js"></script>
+		<script src="js/ajax1.js"></script>
+		<script src="js/vue.js"></script>
+		<!--<script src="js/zhifu.js"></script>-->
+		<script>
+			mui.init({
+			
+			});
+		</script>
+	</body>
+
+</html>

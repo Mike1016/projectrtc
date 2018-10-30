@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.daka.dao.fiveInvest.IFiveTimesInvestDAO">
+	
+	<!-- 查询 -->
+	<select id="getAllExcutingFiveInvestRecord" resultType="com.daka.entry.FiveInvest">
+		select * from five_invest_t where state = 0
+	</select>
+	
+	<insert id="saveFiveTimesInvestLog" parameterType="java.util.List">
+		insert into five_invest_log_t(
+		customer_id,capital,rate,current_return_account,create_time
+		) values 
+		<foreach collection ="list" item="log" separator =",">
+            ( #{log.customerId}, #{log.capital}, #{log.rate}, 
+            #{log.currentReturnAccount},#{log.createTime})
+        </foreach>
+	</insert>
+	
+	<update id="updateFiveTimesInvest" parameterType="java.util.List">
+         <foreach collection="list" item="item" index="index"  separator=";">
+       		 update five_invest_t 
+             set dynamic_account = #{item.dynamicAccount},
+             state = #{item.state} where id = #{item.id}
+         </foreach>
+    </update>
+
+	<!--List<PageData> queryFiveInvestlistPage(Page page); //分页查询-->
+	<select id="queryFiveInvestlistPage" parameterType="page" resultType="pd">
+		select fit.*,ct.nick_name as nickName from five_invest_t fit
+		LEFT JOIN customer_t ct ON fit.customer_id = ct.id
+		where 1=1
+		<if test="pd.nick_name!= null and pd.nick_name != ''">
+			and ct.nick_name like CONCAT('%', #{pd.nick_name}, '%')
+		</if>
+		<if test="pd.createTimeFrom!= null and pd.createTimeFrom != ''
+        and pd.createTimeTo!= null and pd.createTimeTo != ''">
+			and fit.create_time BETWEEN #{pd.createTimeFrom} AND #{pd.createTimeTo}
+		</if>
+		ORDER BY fit.create_time DESC
+	</select>
+
+	<!--List<PageData> queryFiveInvestLoglistPage(Page page); //分页查询-->
+	<select id="queryFiveInvestLoglistPage" parameterType="page" resultType="pd">
+		select filt.*,ct.nick_name as nickName,fit.limit_account as limitAccount from five_invest_log_t filt
+		LEFT JOIN five_invest_t fit ON filt.five_invest_id = fit.id
+		LEFT JOIN customer_t ct ON filt.customer_id = ct.id
+		where 1=1
+		<if test="pd.nick_name!= null and pd.nick_name != ''">
+			and ct.nick_name like CONCAT('%', #{pd.nick_name}, '%')
+		</if>
+		<if test="pd.createTimeFrom!= null and pd.createTimeFrom != ''
+        and pd.createTimeTo!= null and pd.createTimeTo != ''">
+			and filt.create_time BETWEEN #{pd.createTimeFrom} AND #{pd.createTimeTo}
+		</if>
+		ORDER BY filt.create_time DESC
+	</select>
+	<insert id="saveFiveInvest" parameterType="com.daka.entry.FiveInvest"> 
+	INSERT INTO five_invest_t (
+		customer_id,
+		origin_account,
+		dynamic_account,
+		limit_account,
+		create_time
+	)
+	VALUES
+		(
+			#{customerId},
+			#{originAccount},
+			#{dynamicAccount},
+			#{limitAccount},
+			now()
+		)
+	
+	</insert>
+</mapper>

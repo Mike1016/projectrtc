@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>商品分类</title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/base.css" rel="stylesheet" />
+		<link href="css/fenlei.css" rel="stylesheet" />
+	</head>
+	<body>
+		<div id="example" class="content f">
+			<div class="ssksxb pr">
+				<div class="ssk flexrow">
+					<div class="inpus flexcolumn jcct">
+						<img class="search" src="images/shangcheng/sousuo.png"/>
+						<input type="text" placeholder="搜索关键字···" name="" id="" value=""/>
+					</div>
+					<div class="listqiehuan">
+						<img src="images/shangcheng/liebiao.png" alt="" />
+					</div>
+				</div>
+				<div class="sxb syfl">
+					所有分类
+				</div>
+			</div>
+		<div class="fenlei">
+			<!--<div class="fenleilist flexrow">
+				<div data-flid="经典箱包">
+					<img src="images/fenlei/01.png" alt="" />
+				</div>
+				<div data-flid="男女首饰">
+					<img src="images/fenlei/02.png" alt="" />
+				</div>
+				<div data-flid="母婴玩具">
+					<img src="images/fenlei/03.png" alt="" />
+				</div>
+			</div>
+			<div class="fenleilist flexrow">
+				<div data-flid="健身器材">
+					<img src="images/fenlei/04.png" alt="" />
+				</div>
+				<div data-flid="茶叶茶具">
+					<img src="images/fenlei/05.png" alt="" />
+				</div>
+				<div data-flid="精品酒庄">
+					<img src="images/fenlei/06.png" alt="" />
+				</div>
+			</div>
+			<div class="fenleilist flexrow">
+				<div data-flid="旅游类">
+					<img src="images/fenlei/07.png" alt="" />
+				</div>
+				<div data-flid="手机充值卡">
+					<img src="images/fenlei/08.png" alt="" />
+				</div>
+				
+			</div>-->
+		</div>
+		<div class="footer flexrow jcsa">
+			<div class="flexrow jcct" onclick="javascript:window.location.href='index.html'">
+				<div>
+					<img src="images/tab/shouye-02.png" alt="" />
+				</div>
+			</div>
+			<div class="flexrow jcct" onclick="javascript:window.location.href='fenlei.html'">
+				<div>
+					<img src="images/tab/fenlei-01.png" alt="" />
+				</div>
+			</div>
+			<div class="flexrow jcct gouwuche">
+				<div>
+					<img src="images/tab/gouwuche-02.png" alt="" />
+				</div>
+			</div>
+			<div class="flexrow jcct my">
+				<div>
+					<img src="images/tab/huiyuan-02.png" alt="" />
+				</div>
+			</div>
+		</div>
+			
+			
+		</div>
+	
+		<script src="js/jquery.min.js"></script>
+		<script src="js/base.js"></script>
+		<script src="js/ajax1.js"></script>
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/public.js"></script>
+		<script>
+			//$.getJSON(base+'',{sessionId:sessionId},function(res){
+				ajax({
+				type:'get',
+				url:'/app/goodsType /typeShow.do',
+				data:{sessionId:sessionId},
+				success:function(res){
+					console.log(res);
+				if(res.status == 1){
+					var h = '<div class="fenleilist flexrow">';
+					$.each(res.data, function(k,v) {
+						if((k+1)%3!=0){
+							h+=`
+							<div data-flid="${v.typeName}">
+								<img src="${v.typeImg}" alt="" />
+								${v.typeName}
+							</div>
+							`;
+						}else{
+							h+=`
+								<div data-flid="${v.typeName}">
+									<img src="${v.typeImg}" alt="" />
+									${v.typeName}
+								</div>
+							</div>
+							<div class="fenleilist flexrow">
+							`;
+						}
+					});
+					h+='</div>';
+					console.log(h);
+					$('.fenlei').html(h);
+				}else{
+					mui.toast(res.msg);
+				}
+				}
+			})
+			$('#example').on('tap','[data-flid]',function(){  //跳转详情
+				var id = $(this).attr('data-flid');
+				console.log(id);
+				localStorage['fenlei'] = id;
+				location.href = 'shangpinglist.html';
+			});
+			$('.syfl').on('tap',function(){
+				localStorage['fenlei']='';
+				location.href = 'shangpinglist.html';
+			});
+		</script>
+	</body>
+
+</html>

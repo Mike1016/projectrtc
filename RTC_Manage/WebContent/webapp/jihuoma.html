@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>激活码</title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/base.css" rel="stylesheet" />
+		<style type="text/css">
+			.ewm{
+				width: 91%;
+				height: 3.5rem;
+				position: absolute;
+				bottom: 39%;
+				left: 5%;
+			}
+			.jihbtn{
+				width: 26%;
+				background-color: #FE2059;
+				border-color: #FE2059;
+				border-radius: 100px;
+				position: absolute;
+				bottom: 8%;
+				left: 38%;
+				color: #fff;
+			}
+			.inputkuang{
+				width: 200px;
+				height: 40px;
+				display: flex;
+				flex-direction: row;
+				justify-content: space-around;
+				position: absolute;
+				top:30%;
+				left: 50%;
+				margin-left: -100px;
+			}
+			.inputkuang>div{
+				width: 20px;
+				height: 20px;
+				border: 1px solid #FE2059;
+				margin: 10px 0;
+			}
+			input[type=text]{
+				position: absolute;
+				top: 0;
+				left: 0;
+				padding: 10px 7px;
+				width: 110%;
+				letter-spacing:17.5px;
+				font-size: 14px;
+				/*caret-color:#fff;*/
+				color: #fff;
+			}
+			input[type=text]::first-line {
+			  color: #FE2059;
+			}
+			@media only screen and (min-height: 810px) and (max-height: 813px) {
+				.ewm{
+					width: 91%;
+				height: 3.5rem;
+				position: absolute;
+				bottom: 50%;
+				left: 5%;
+				/*background-color: #0062CC;*/
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<div id="example" class="content pr" style="background-color:#FE2059 ;">
+			<img src="images/myer/jihuoma.jpg" alt="" />
+			<div style="width: 0.7rem; position: absolute;top: 3%;left: 5%;" onclick="javascript:window.location.href='my.html'">
+				<img src="images/myer/shanchu.png" alt="" />
+			</div>
+			<div class="ewm" >
+				<div style="text-align: center; font-size: 0.45rem; color: #FE2059; margin-top: 0.2rem; font-weight:600 ;">激活码</div>
+				<div class="inputkuang">
+					<div></div><div></div><div></div><div></div>
+					<div></div><div></div><div></div><div></div>
+					<input type="text" class="jhm" maxlength="8" name=""id="" value="" />
+				</div>
+				
+					<button class="jihbtn">立即激活</button>
+				
+			</div>
+		</div>
+	
+		<script src="js/jquery.min.js"></script>
+		<script src="js/base.js"></script>
+		<script src="js/mui.min.js"></script>
+		<script src="js/ajax1.js"></script>
+		<script>
+			$('.jihbtn').click(function(){
+				var jhm = $('.jhm').val();
+		ajax({
+			type:"post",
+			url:"/app/customer/updateCode.do",
+			data:{
+				sessionId:sessionId,
+				code:jhm
+			},
+			async:true,
+			success:function(res){
+				console.log(res);
+				if(res.status == 1){
+					location.href="my.html";
+					mui.toast(res.msg);
+				}else{
+					mui.toast(res.msg);
+				}
+			}
+		});
+		})
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,47 @@
+.content.t{
+	padding-top: 2.5rem;
+}
+.tabs{
+	width: 100%;
+	height: 1.5rem;
+	border-top: 0.2rem solid #000518;
+	background-color: #17202e;
+	position: fixed;
+	top:1.2rem;
+}
+.tabs>div{
+	width: 17%;
+	text-align: center;
+	height: 1.3rem;
+	padding: 0 0.2rem;
+	line-height: 1.3rem;
+	color: #fff;
+}
+.tabs>div.active{
+	border-bottom: 1px solid #fe2500;
+	color: #fe2500;
+}
+.heji>div>div {
+    height: 1rem;
+    line-height: 1rem;
+}
+.heji{
+	flex-direction: row ;
+}
+.heji>div {
+	
+     flex-wrap: nowrap;
+     margin: 0;
+}
+.btn{
+	/*padding: 1px 6px;*/
+	width: 1.8rem;
+	height: 0.6rem;
+	padding: 0;
+}
+.lists>div{
+	display: none;
+}
+.lists>div.active{
+	display: block;
+}

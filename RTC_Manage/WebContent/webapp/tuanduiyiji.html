@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>团队详情(一级)</title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/base.css" rel="stylesheet" />
+		<link href="css/tiyanjin.css" rel="stylesheet" />
+	</head>
+	<body>
+		<div id="example" class="content t">
+			<div class="yemianbiti bg phoneblock">
+				<a onClick="javascript:history.back(-1)" class="fanhuiyige mui-icon mui-icon-back"></a>
+				团队详情(一级)
+			</div>
+			<div class="card liebiaokuang" style="min-height: 97%;">
+				<div class="ytsj flexrow jcsb" v-for="item in level1">
+					<div >
+						<p>{{item.phone}}</p>
+					</div>
+					<div>
+						<span v-if="item.state == 1" class="mui-icon mui-icon-star jhzt"></span>
+						<span  v-if="item.state !=1 "class="mui-icon mui-icon-star wjhzt"></span>
+					</div>
+					<div>
+						<span v-if="item.state == 1" class="ztbtn btnbul">已激活</span>
+						<span   v-if="item.state ==0" class="ztbtn wjhbtn">未激活</span>
+						<span   v-if="item.state ==2" class="ztbtn wjhbtn">已封号</span>
+					</div>
+				</div>
+				
+				
+			</div>
+			
+		</div>
+	
+		<script src="js/jquery.min.js"></script>
+		<script src="js/base.js"></script>
+		<script src="js/mui.min.js"></script>
+				<script src="js/ajax1.js"></script>
+		<script src="js/vue.js"></script>
+		<script src="js/tuanduixiangqing.js"></script>
+
+		<script>
+			
+		</script>
+	</body>
+
+</html>

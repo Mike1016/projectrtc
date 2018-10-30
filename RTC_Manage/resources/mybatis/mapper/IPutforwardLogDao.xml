@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.daka.dao.putforward.PutforwardLogDAO">
+
+    <!--List<PageData> queryPutforwardlistPage(Page page); //提现记录-->
+    <select id="queryPutforwardlistPage" parameterType="page" resultType="pd">
+        select t1.*,t2.nick_name,t2.phone,t2.level,t2.alipay,t2.id as cId from putforward_log_t t1
+        left join customer_t t2 on t1.customer_id = t2.id
+        where 1=1
+        <if test="pd.nick_name!= null and pd.nick_name != ''">
+            and nick_name like CONCAT('%', #{pd.nick_name}, '%')
+        </if>
+        <if test="pd.putForwardTimeFrom!= null and pd.putForwardTimeFrom != ''
+        and pd.putForwardTimeTo!= null and pd.putForwardTimeTo != ''">
+            and create_time BETWEEN #{pd.putForwardTimeFrom} AND #{pd.putForwardTimeTo}
+        </if>
+    </select>
+
+    <!--Map<String,Object> queryById(Integer id); //通过id查询详情-->
+    <select id="queryById" resultType="java.util.Map" parameterType="java.lang.Integer">
+        select t1.*,t2.nick_name,t2.phone,t2.level from putforward_log_t t1
+        left join customer_t t2 on t1.customer_id = t2.id
+        where t2.id = #{id}
+    </select>
+
+    <!--void updateState(PutforwardLogVO putforwardLogVO); //审核是否通过以及修改描述-->
+    <update id="updateState" parameterType="com.daka.entry.PutforwardLogVO">
+        update putforward_log_t set state=#{state},remark=#{remark},update_time=#{updateTime} where id=#{id}
+    </update>
+    
+    <select id="findById" parameterType="java.lang.Integer" resultType="com.daka.entry.PutforwardLogVO">
+    	select * from putforward_log_t where id=#{id}
+    </select>
+    
+    <insert id="insert" parameterType="com.daka.entry.PutforwardLogVO">
+    	insert into putforward_log_t(customer_id,account,type,create_time,state,remark) 
+    	values(#{customerId},#{account},#{type},#{createTime},#{state},#{remark})
+    </insert>
+
+</mapper>

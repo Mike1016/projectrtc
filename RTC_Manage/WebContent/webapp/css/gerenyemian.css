@@ -1,0 +1,18 @@
+.list{
+	margin: 0.2rem;
+	padding: 0.2rem;
+	background-color: rgba(255,255,255,0.7);
+}
+.list>div{
+	padding: 0.4rem 0.1rem;
+	border-bottom: 1px solid #e0a370;
+	font-size: 0.4rem;
+}
+.list>div:last-child{
+	border-bottom: none;
+}
+button.btn{
+	width: 46%;
+	margin-left: 27%;
+	border-radius: 5px;
+}

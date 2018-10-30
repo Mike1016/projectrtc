@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.daka.dao.ranking.RankingDAO">
+
+    <!--List<PageData> queryRankinglistPage(Page page); //查询排行榜-->
+    <select id="queryRankinglistPage" resultType="pd" parameterType="page">
+        SELECT * from ranking_t where 1=1
+        order by account desc
+        <if test="pd.phone!= null and pd.phone != ''">
+            and phone like CONCAT('%', #{pd.phone}, '%')
+        </if>
+    </select>
+
+    <insert id="insertAccount" parameterType="com.daka.entry.RankingVO">
+        insert into ranking_t(phone,account,state) values (#{phone},#{account},#{state})
+    </insert>
+
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from ranking_t where id=#{id}
+    </delete>
+
+    <select id="queryRankingById" parameterType="java.lang.Integer" resultType="java.util.Map">
+        SELECT * FROM ranking_t where id=#{id}
+    </select>
+
+    <!-- 修改 -->
+    <update id="updateRanking" parameterType="com.daka.entry.RankingVO">
+        update ranking_t
+        <trim prefix="set" suffixOverrides=",">
+            <if test="phone != null and phone != ''">phone=#{phone},</if>
+            <if test="account != null and account != ''">account=#{account},</if>
+        </trim>
+        where id=#{id}
+    </update>
+
+    <select id="queryRanking" resultType="com.daka.entry.RankingVO">
+        select id,phone,account from ranking_t order by account desc LIMIT 20
+    </select>
+
+    <delete id="deleteRanking">
+        DELETE FROM ranking_t WHERE state = 0
+    </delete>
+
+    <!--排名定时任务-->
+    <insert id="saveRankingTask">
+        INSERT INTO ranking_t(phone, account, state)
+        SELECT A.phone, FORMAT(SUM(B.account)/1.8, 4) AS account, 0
+        FROM customer_t A LEFT JOIN recharge_log_t B ON A.id = B.customer_id AND B.type = 1
+        WHERE A.state = 1
+        GROUP BY A.id, A.phone
+        HAVING SUM(B.account) > 0
+        ORDER BY account DESC LIMIT 20
+    </insert>
+
+    <select id="queryPhone" parameterType="java.lang.String" resultType="java.lang.String">
+        select phone from ranking_t where phone = #{phone}
+    </select>
+</mapper>

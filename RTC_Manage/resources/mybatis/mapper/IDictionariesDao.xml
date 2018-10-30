@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.daka.dao.dictionaries.DictionariesDAO">
+
+    <!--List<Map<String,Object>> queryAll(); //查询所有信息-->
+    <select id="queryAll" resultType="com.daka.entry.DictionariesVO">
+        select type,parameter from dictionaries_t
+    </select>
+
+    <select id="queryDictionarieslistPage" parameterType="page" resultType="pd">
+        select * from dictionaries_t where 1=1
+        <if test="pd.remarks!= null and pd.remarks != ''">
+            and remarks like CONCAT('%', #{pd.remarks}, '%')
+        </if>
+    </select>
+
+    <select id="queryById" resultType="java.util.Map" parameterType="java.lang.Integer">
+        select * from dictionaries_t where id=#{id}
+    </select>
+
+    <update id="toUpdate" parameterType="java.util.Map">
+        update dictionaries_t set parameter=#{parameter} where id=#{id}
+    </update>
+</mapper>

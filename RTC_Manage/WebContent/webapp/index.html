@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<title>首页</title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/base.css" rel="stylesheet" />
+		<link href="css/index.css" rel="stylesheet" />
+	</head>
+	<body>
+		<div class="content f" id="example">
+			<div class="banner" style="z-index: 10;">
+				
+				<div class="mui-slider">
+				  <div class="mui-slider-group mui-slider-loop">
+				    <!--支持循环，需要重复图片节点-->
+				   <!--<div class="mui-slider-item mui-slider-item-duplicate"><a href="#"><img src="images/index/banner3.png" /></a></div>
+				    
+				    <div class="mui-slider-item"><a href="#"><img src="images/index/banner1.png" /></a></div>
+				    <div class="mui-slider-item"><a href="#"><img src="images/index/banner2.png" /></a></div>
+				    <div class="mui-slider-item"><a href="#"><img src="images/index/banner3.png" /></a></div>-->
+				    <!--支持循环，需要重复图片节点-->
+				    <!--<div class="mui-slider-item mui-slider-item-duplicate"><a href="#"><img src="images/index/banner1.png" /></a></div>-->
+				  </div>
+				</div>
+				
+				
+				<!--<img src="images/shangcheng/banner.jpg" alt=""  onclick="javascript:window.location.href='zhongqiu.html'"/>-->
+				<div class="flexrow sst">
+					<div class="fdj" @click="sousuoinp">
+						<img src="images/shangcheng/sousuo.png" alt="" />
+					</div>
+					<div class="ssk">
+						<input type="text" placeholder="请输入关键字" v-model="goodsName"/>
+					</div>
+				</div>
+			</div>
+			
+			<div v-if="msg" id="lists" class="">
+				<div class="shangpinlist flexrow ">
+					<div v-for="item in msg" >
+						<div class="tupian" :data-spid="item.id">
+							<img  :src="item.goodsAttachmentContent" alt="" />
+						</div>
+						<div class="jies">
+							<p>
+								{{item.goodsName}}
+							</p>
+							<div class="price">
+								￥ {{item.goodsDiscountPrice}}
+							</div>
+							<div>
+								<button @click.stop="tmpgwc(item.id)">立即购买</button>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+			<div class="jzsj" @click="jzsj">{{isjzsj?'加载数据···':'没有数据了···'}}</div>
+			
+		</div>
+		
+		
+		
+		<div class="footer flexrow jcsa">
+			<div class="flexrow jcct" onclick="javascript:window.location.href='index.html'">
+				<div>
+					<img src="images/tab/shouye-01.png" alt="" />
+				</div>
+			</div>
+			<div class="flexrow jcct" onclick="javascript:window.location.href='fenlei.html'">
+				<div>
+					<img src="images/tab/fenlei-02.png" alt="" />
+				</div>
+			</div>
+			<div class="flexrow jcct gouwuche">
+				<div>
+					<img src="images/tab/gouwuche-02.png" alt="" />
+				</div>
+			</div>
+			<div class="flexrow jcct my">
+				<div>
+					<img src="images/tab/huiyuan-02.png" alt="" />
+				</div>
+			</div>
+		</div>
+		<script src="js/jquery.min.js"></script>
+		<script src="js/base.js"></script>
+		<script src="js/mui.min.js"></script>
+		<script src="js/vue.js"></script>
+		<script src="js/ajax1.js"></script>
+		<script type="text/javascript" src="js/public.js"></script>
+		<script src="js/index.js"></script>
+		<script>
+			var gallery = mui('.mui-slider');
+			gallery.slider({
+			  interval:2500//自动轮播周期，若为0则不自动播放，默认为0；
+			});
+			
+		</script>
+	</body>
+
+</html>

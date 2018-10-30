@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>佣金钱包</title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/base.css" rel="stylesheet" />
+		<link href="css/tiyanjin.css" rel="stylesheet" />
+	</head>
+	<body>
+		<div id="example" class="content t">
+			<div class="yemianbiti bg phoneblock">
+				<a onClick="javascript:history.back(-1)" class="fanhuiyige mui-icon mui-icon-back"></a>
+				佣金钱包
+			</div>
+			<div class="card flexrow jcsb">
+				<div class="flexcolumn jcct">佣金余额</div>
+				<div class="txtbu flexcolumn jcct">{{sj}}</div>
+				<div class="jihbtn zwkf" >提现</div>
+			</div>
+			<div class="card flexrow jcsb zwkf">
+				<p>一级收益</p>
+				<span class="mui-icon mui-icon-forward" style="color: #fff;"></span>
+			</div>
+			<div class="card flexrow jcsb zwkf">
+				<p>二级收益</p>
+				<span class="mui-icon mui-icon-forward" style="color: #fff;"></span>
+			</div>
+			<div class="card flexrow jcsb zwkf">
+				<p>三级收益</p>
+				<span class="mui-icon mui-icon-forward" style="color: #fff;"></span>
+			</div>
+			
+		</div>
+	
+		<script src="js/jquery.min.js"></script>
+		<script src="js/base.js"></script>
+		<script src="js/mui.min.js"></script>
+		<script src="js/ajax1.js"></script>
+		<script src="js/vue.js"></script>
+		<script src="js/yongjinqianbao.js"></script>
+		
+		<script>
+			$('.zwkf').click(function(){
+				mui.toast('暂未开放！');
+			})
+		</script>
+	</body>
+
+</html>

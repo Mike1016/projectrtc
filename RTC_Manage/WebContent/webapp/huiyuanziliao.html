@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>会员资料</title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/base.css" rel="stylesheet" />
+		<link href="css/mimaxiugai.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="css/app.css" />
+		<link href="css/mui.picker.css" rel="stylesheet" />
+		<link href="css/mui.poppicker.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="css/mui.picker.min.css" />
+		<style type="text/css">
+			.dxyz{
+				padding: 0 0.1rem;
+				outline: none;
+				border: none;
+				height: 0.8rem;
+				margin-top: 0.1rem;
+				color: #666;
+			}
+			.cerify-code-panel{
+				float: right;
+			}
+			.btn{background-color: #fe2500;height: 1rem;font-size: 0.4rem;}
+			.card{
+				padding:0 0.3rem;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="example" class="content t">
+			<div class="yemianbiti bg phoneblock">
+				<a onClick="javascript:history.back(-1)" class="fanhuiyige mui-icon mui-icon-back"></a>
+				会员资料
+			</div>
+			
+			<div class="card">
+				<div class="flexrow">
+					<span>手机号</span>
+					<div style="margin-left: 1rem;"><input type="text" class="shouji" id="shoujihao" readonly="readonly" value="18888888888" />(已绑定)</div>
+				</div>
+			</div>
+			<div class="card">
+				<div  class="flexrow jcsb">
+					<div class="flexcolumn jcct">
+						姓名
+					</div>
+					<div>
+						<input type="text" class="zsxm" placeholder="请输入真实姓名"  name="" id="" value="" /> 
+					</div>
+				</div>
+				
+				<div class="txyz pr"></div>
+			
+				<div  class="flexrow jcsb">
+					<div>
+						<input type="text" class="dxm" maxlength="6"  pattern="\d*"/ placeholder="请输入短信验证码"/>
+					</div>
+					<button class="dxyz flexcolumn jcct">获取验证码</button>
+				</div>
+			
+				<div  class="flexrow jcsb">
+					<div class="flexcolumn jcct">
+						微信号
+					</div>
+					<div>
+						<input type="text" class="wechat" placeholder="请输入微信号"  name="" id="" value="" /> 
+					</div>
+				</div>
+			
+				<div  class="flexrow jcsb">
+					<div class="flexcolumn jcct">
+						支付宝账号
+					</div>
+					<div>
+						<input type="text" class="zfbzh" placeholder="请输入支付宝账号"  name="" id="" value="" /> 
+					</div>
+				</div>
+			
+				<div  class="flexrow jcsb">
+					<div class="flexcolumn jcct">
+						出生日期
+					</div>
+					<div>
+						<input type="text" id="result" name="" data-options='{"type":"date","beginYear":1960,"endYear":2016}' readonly="readonly" placeholder="请选择时间" id="" value="" /> 
+					</div>
+				</div>
+				<div  class="flexrow jcsb">
+					<div class="flexcolumn jcct">
+						所在城市
+					</div>
+					<div>
+						<input id='showCityPicker3' type="text" readonly="readonly" name="" id="" placeholder="请选择城市" /> 
+					</div>
+				</div>
+			</div>
+			
+			<div style="width: 80%;margin-left: 10%;">
+				<button class="btn" id="check-btn">确认修改</button>
+			</div>
+			
+		</div>
+	
+		<script src="js/jquery.min.js"></script>
+		<script src="js/base.js"></script>
+		<script src="js/mui.min.js"></script>
+		<script src="js/public.js"></script>
+		<script src="js/verify.js"></script>
+		<script src="js/tuxingyz.js"></script>
+		<script src="js/mui.picker.js"></script>
+		<script src="js/mui.poppicker.js"></script>
+		<script src="js/city.data.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/city.data-3.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/mui.picker.min.js"></script>
+		<script src="js/ajax1.js"></script>
+		<script src="js/huiyuanziliao.js"></script>
+		<script>
+				
+		</script>
+	</body>
+
+</html>

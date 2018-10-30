@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.daka.dao.shopping.ShoppingOrderDAO">
+
+    <!--List<PageData> queryShoppingOrderlistPage(Page page); //分页查询-->
+    <select id="queryShoppingOrderlistPage" parameterType="page" resultType="pd">
+        select t3.nick_name,t3.phone,t1.order_no,t6.receiving_address,t6.which_located,t1.id,t1.state,t1.create_time,t2.count as num,t2.price,t2.shopping_coin,t4.goods_name,t5.type_name from
+        shopping_order_t t1
+        left join shopping_order_goods_t t2 on t1.id = t2.order_id
+        left join customer_t t3 on t1.customer_id = t3.id
+        left join goods_t t4 on t2.goods_id = t4.id
+        left join goods_type_t t5 on t4.goods_type_id = t5.id
+        left join receiving_address_t t6 on t1.receiving_address_id = t6.id
+        where 1=1
+        <if test="pd.nick_name!= null and pd.nick_name != ''">
+            and nick_name like CONCAT('%', #{pd.nick_name}, '%')
+        </if>
+    </select>
+
+    <!--添加订单-->
+    <insert id="saveOrder" parameterType="com.daka.entry.ShoppingOrderVO">
+        INSERT INTO shopping_order_t (
+            customer_id,
+            order_no,
+            receiving_address_id,
+            state,
+            create_time
+        )
+        VALUES
+	    (#{customerId},#{orderNo},#{receiovingAddressId},#{state},#{createTime})
+    </insert>
+
+    <!--根据商品id查询商品信息-->
+    <select id="queryGoodsByIds" resultType="com.daka.entry.GoodsVO" parameterType="String">
+        select * from goods_t where 1=1 and ${ids}
+    </select>
+
+    <!--添加订单商品-->
+    <insert id="batchSaveOrderGoods" parameterType="java.util.List">
+        INSERT INTO shopping_order_goods_t (
+            goods_id,
+            order_id,
+            count,
+            shopping_coin,
+            price,
+            create_time
+        )
+        VALUES
+        <foreach collection="list" item="sog" index="index" separator=",">
+          (#{sog.goodsId},#{sog.orderId},#{sog.count},#{sog.shoppingCoin},#{sog.price},#{sog.createTime})
+        </foreach>
+    </insert>
+
+    <!--根据订单编号查询-->
+    <select id="queryOrderNo" resultType="com.daka.entry.ShoppingOrderVO" parameterType="String">
+        select * from shopping_order_t where order_no = #{orderNo}
+    </select>
+
+    <!--根据订单id查询-->
+    <select id="queryOrderId" resultType="com.daka.entry.ShoppingOrderVO" parameterType="java.lang.Integer">
+        select * from shopping_order_t where id = #{id}
+    </select>
+
+    <!--修改订单状态-->
+    <update id="updateOrderState" parameterType="com.daka.entry.ShoppingOrderVO">
+        UPDATE shopping_order_t set state = #{state} where id = #{id}
+    </update>
+
+
+    <select id="queryMyOrder" resultType="com.daka.entry.dto.ShoppingOrderDTO" parameterType="com.daka.entry.ShoppingOrderVO">
+        SELECT
+            *,ct.shopping_coin AS myShoppingCoin,g.id as goodsId
+        FROM
+            shopping_order_t so,
+            shopping_order_goods_t sog,
+            goods_t g,
+            goods_detail_t gd,
+            customer_t ct
+        WHERE
+            so.id = sog.order_id
+        AND sog.goods_id = g.id
+        AND gd.goods_id = g.id
+        AND ct.id = so.customer_id
+        AND gd.type = 1
+        <if test="id > 0 ">
+            AND so.id = #{id}
+        </if>
+        AND so.customer_id=#{customerId}
+        GROUP BY sog.id
+        order by so.create_time DESC
+    </select>
+
+    <select id="queryRefundOrder" resultType="com.daka.entry.dto.ShoppingOrderDTO" parameterType="com.daka.entry.ShoppingOrderVO">
+        SELECT
+            *
+        FROM
+            shopping_order_t so,
+            shopping_order_goods_t sog
+        WHERE
+            so.id = sog.order_id
+        AND so.customer_id = #{customerId}
+        AND so.id =#{id}
+        AND so.state = #{state};
+    </select>
+
+    <!---->
+    <select id="queryByOrderId" parameterType="java.lang.Integer" resultType="java.util.Map">
+        select t3.nick_name,t6.receiving_address,t6.which_located,t1.id,t3.id as customerId,t1.state,t1.create_time,t2.count as num,t2.price,t2.shopping_coin,t4.goods_name,t5.type_name from
+        shopping_order_t t1
+        left join shopping_order_goods_t t2 on t1.id = t2.order_id
+        left join customer_t t3 on t1.customer_id = t3.id
+        left join goods_t t4 on t2.goods_id = t4.id
+        left join goods_type_t t5 on t4.goods_type_id = t5.id
+        left join receiving_address_t t6 on t1.receiving_address_id = t6.id
+        where t1.id=#{id}
+    </select>
+
+    <!--申请退款-->
+    <update id="toUpdate" parameterType="com.daka.entry.ShoppingOrderVO">
+        update shopping_order_t set state=#{state} where id=#{id}
+    </update>
+
+    <!--待发货到待收货-->
+    <update id="updateState" parameterType="com.daka.entry.ShoppingOrderVO">
+        update shopping_order_t set state=3 where id=#{id}
+    </update>
+
+    <!-- -->
+    <update id="updateOrder" parameterType="com.daka.entry.ShoppingOrderVO">
+        update shopping_order_t
+        <trim prefix="set" suffixOverrides=",">
+            <if test="remark !=null and remark !=''">remark=#{remark},</if>
+            <if test="receiovingAddressId >= 0">receiving_address_id=#{receiovingAddressId},</if>
+        </trim>
+         where id=#{id}
+    </update>
+
+    <select id="queryByAddressIdState" resultType="com.daka.entry.ShoppingOrderVO" parameterType="String">
+        select * shopping_order_t where state = 0 and receiving_address_id = #{addressId}
+    </select>
+</mapper>

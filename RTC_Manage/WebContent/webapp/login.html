@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>登录</title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/base.css" rel="stylesheet" />
+		<link href="css/login.css" rel="stylesheet" />
+	</head>
+	<body>
+		<div class="content">
+			<div class="logo">
+				<img src="images/login/logo.png" alt="" />
+			</div>
+			<div class="inptkuag">
+				<div class="srk flexrow jcct">
+					<div class="tb">
+						<img src="images/login/shouji.png" alt="" />
+					</div>
+					<div class="inpt">
+						<input type="text" class="shouji"  maxlength="11" pattern="\d*"/  placeholder="请输入手机号"/>
+					</div>
+				</div>
+				<div class="srk flexrow jcct">
+					<div class="tb">
+						<img src="images/login/mima.png" alt="" />
+					</div>
+					<div class="inpt pr">
+						<input type="password" class="mm" maxlength="16" placeholder="请输入密码"/>
+						
+					</div>
+				</div>
+			</div>
+			<div class="btnkuang">
+				<div class="btn denglu">登录</div>
+			</div>
+			<div class="btnkuang">
+				<div class="btn register" onclick="javascript:window.location.href='register.html'">会员注册</div>
+			</div>
+			<div class="yzm" onclick="javascript:window.location.href='wangjimima.html'">
+				忘记密码?
+			</div>
+		</div>
+		
+		
+		
+		
+		<script src="js/jquery.min.js"></script>
+		<script src="js/base.js"></script>
+		<script src="js/mui.min.js"></script>
+		<script src="js/ajax1.js"></script>
+		<script>
+			$('.denglu').on('tap',function(){
+				var sj = $.trim($('.shouji').val());
+				var mm = $.trim($('.mm').val());
+				var phoneReg = /^1[345789]\d{9}$/;
+				var pwdReg = /^(?![^a-zA-Z]+$)(?!\D+$).{6,16}$/;
+				if(!phoneReg.test(sj)){
+					mui.toast('请输入有效的手机号！');
+					return;
+				}
+				/*if(!pwdReg.test(mm)){
+					mui.toast('密码为6-16位数字与字母！');
+					return;
+				}*/
+				
+				//console.log(sj);
+				//console.log(mm);
+				ajax({
+					type:"POST",
+					url:'/app/customer/checkLog.do',
+					timeout : 3000,
+					data:{
+						phone:sj,
+						password:mm
+					},
+					success:function(res){
+						//console.log(res);
+						if(res.status == 1){
+							mui.toast(res.msg);
+							localStorage['sessionId']=res.data.sessionId;
+							location='index.html';
+						}else{
+							mui.toast(res.msg);
+						}
+					},
+					complete : function(XMLHttpRequest,status){ //请求完成后最终执行参数
+					　　　　if(status=='timeout'){//超时,status还有success,error等值的情况
+					 　　　　　 ajaxTimeoutTest.abort();//abort()终止请求，当一个请求被终止，它的 readyState 属性将被置为0
+					　　　　　  alert("超时");
+					　　　　}
+					}
+				});
+			});
+		</script>
+	</body>
+
+</html>

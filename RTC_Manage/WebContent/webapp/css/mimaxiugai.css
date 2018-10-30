@@ -1,0 +1,43 @@
+input[type='password']{
+	text-align: right;
+}
+input[type=color], input[type=date], input[type=datetime-local], input[type=datetime], input[type=email], input[type=month], input[type=number], input[type=password], input[type=search], input[type=tel], input[type=text], input[type=time], input[type=url], input[type=week], select, textarea {
+    padding: 10px 0px;
+}
+.card>div{
+	padding: 0.2rem;
+	border-bottom: 1px solid #EEEEEE;
+}
+.card>div:last-child{
+	border-bottom: none;
+}
+.yzm {
+    height: 40px;
+    width: 90px;
+    text-align: center;
+    line-height: 40px;
+    position: absolute;
+    right: 0.2rem;
+    top: 0.2rem;
+}
+.mui-switch.mui-active {
+    border-color: #fe2500;
+    background-color: #fe2500;
+}
+.mui-switch{border: none;}
+.mui-switch .mui-switch-handle{
+	top: 0.01rem;
+}
+#shoujihao{
+	width: 3rem;
+	padding: 0;
+	height: 20px;
+}
+.btn{
+	height: 1rem;
+	padding: 0;
+	background-color: #fe2500;
+	font-size: 0.4rem;
+}
+.card{padding: 0 0.15rem 0.3rem;}
+

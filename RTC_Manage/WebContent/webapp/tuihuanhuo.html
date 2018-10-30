@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>退换货</title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/base.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="css/gouwuche.css"/>
+		<link href="css/dingdanxiangqing.css" rel="stylesheet" />
+		<link href="css/wodedingdan.css" rel="stylesheet" />
+	</head>
+	<body>
+		<div id="example" class="content t" style="padding-top: 1.2rem;">
+			<div class="yemianbiti bg phoneblock">
+				<a  onclick="javascript:window.location.href='my.html'" class="fanhuiyige mui-icon mui-icon-back"></a>
+				退换货
+			</div>
+			
+			<div class="lists">
+				<div id="quanbu" class="active">
+					<!--待付款-->
+					<div v-if="thh[0]" class="card bord" v-for="(item,index) in thh">
+						<div class="listtop flexrow jcsb">
+							<span>订单号：{{item.orderNo}}</span>
+							<!--<p><span class="mui-icon mui-icon-forward"></span></p>-->
+						</div>
+						<!--单个商品-->
+						<div class="flexrow dgsp" v-for="item in item.goodsList">
+							<div class="shangpinxinxi flexrow">
+								<div class="sptp">
+									<img :src="item.goodsAttachmentContent" alt="" />
+								</div>
+								<div class="flexcolumn jcsb spxq">
+									<p class="wbyc">{{item.goodsName}}</p>
+									<div class="flexrow jcsb">
+										<span class="jiae">￥{{item.price}}</span>
+										<span >x{{item.count}}</span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!--合计-->
+						<div class="flexrow heji jcsb">
+							<div style="width: 60%;font-size: 0.35rem">
+								共<span>{{item.count}}</span>件商品 合计：<span>￥{{item.price}}</span>
+							</div>
+							<div class="flexcolumn jcct">
+								<button class="btn" style="background-color: #fe2500;">{{item.state==5?'审核中':'审核通过'}}</button>
+							</div>
+						</div>
+					</div>
+					<div v-else><img src="images/shangcheng/ddk.png" alt="" /></div>
+					</div>
+
+				
+				
+			
+			
+			</div>
+		
+		</div>
+
+		<script src="js/jquery.min.js"></script>
+		<script src="js/base.js"></script>
+		<script src="js/mui.min.js"></script>
+		<script src="js/vue.js"></script>
+		<script src="js/ajax1.js"></script>
+		<!--<script src="js/tuihuanhuo.js"></script>-->
+		<script>
+			
+			
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,164 @@
+{
+	"login.html": {
+		"refer": [
+			"register.html",
+			"wangjimima.html",
+			"gouwuge.html",
+			"fenlei.html",
+			"index.html",
+			"my.html"
+		],
+		"resources": []
+	},
+	"register.html": {
+		"refer": [
+			"login.html"
+		],
+		"resources": []
+	},
+	"wangjimima.html": {
+		"refer": [
+			"login.html"
+		]
+	},
+	"index.html": {
+		"refer": [
+			"fenlei.html",
+			"gouwuge.html",
+			"my.html",
+			"zhongqiu.html",
+			"querendingdan.html",
+			"login.html"
+		]
+	},
+	"fenlei.html": {
+		"refer": [
+			"gouwuge.html",
+			"index.html"
+		]
+	},
+	"gouwuge.html": {
+		"refer": [
+			"login.html",
+			"my.html",
+			"index.html",
+			"fenlei.html"
+		]
+	},
+	"my.html": {
+		"refer": [
+			"login.html",
+			"index.html",
+			"huiyuanziliao.html",
+			"jihuoma.html",
+			"tiyanjin.html",
+			"shangchengbi.html",
+			"fenhongqianbao.html",
+			"daifenhong.html",
+			"tuanduiyeji.html",
+			"tuanduixiangqing.html",
+			"wodedingdan.html",
+			"tuiguang.html",
+			"lianxikefu.html"
+		]
+	},
+	"zhongqiu.html": {
+		"refer": [
+			"index.html"
+		]
+	},
+	"huiyuanziliao.html": {
+		"refer": [
+			"my.html"
+		]
+	},
+	"jihuoma.html": {
+		"refer": [
+			"my.html"
+		]
+	},
+	"tiyanjin.html": {
+		"refer": [
+			"my.html"
+		]
+	},
+	"shangchengbi.html": {
+		"refer": [
+			"my.html"
+		]
+	},
+	"fenhongqianbao.html": {
+		"refer": [
+			"my.html"
+		]
+	},
+	"daifenhong.html": {
+		"refer": [
+			"my.html"
+		]
+	},
+	"tuanduiyeji.html": {
+		"refer": [
+			"my.html"
+		]
+	},
+	"tuanduiyiji.html": {
+		"refer": [
+			"tuanduixiangqing.html"
+		]
+	},
+	"tuanduierji.html": {
+		"refer": [
+			"tuanduixiangqing.html"
+		]
+	},
+	"tuanduixiangqing.html": {
+		"refer": [
+			"tuanduiyiji.html",
+			"tuanduisanji.html",
+			"tuanduierji.html",
+			"my.html"
+		]
+	},
+	"tuanduisanji.html": {
+		"refer": [
+			"tuanduixiangqing.html"
+		]
+	},
+	"wodedingdan.html": {
+		"refer": [
+			"daishouhuo.html",
+			"my.html"
+		]
+	},
+	"yiwancheng.html": {
+		"refer": [
+			"daifahuo.html"
+		]
+	},
+	"daishouhuo.html": {
+		"refer": [
+			"yiwancheng.html"
+		]
+	},
+	"daifahuo.html": {
+		"refer": [
+			"daifukuan.html"
+		]
+	},
+	"daifukuan.html": {
+		"refer": [
+			"wodedingdan.html"
+		]
+	},
+	"tuiguang.html": {
+		"refer": [
+			"my.html"
+		]
+	},
+	"lianxikefu.html": {
+		"refer": [
+			"my.html"
+		]
+	}
+}

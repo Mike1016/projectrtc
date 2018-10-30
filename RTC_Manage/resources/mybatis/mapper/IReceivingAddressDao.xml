@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.daka.dao.address.ReceivingAddressDAO">
+	<insert id="insert" parameterType="com.daka.entry.ReceivingAddressVO">
+		insert into receiving_address_t(customer_id,receiving_address,addressee,contact_no,which_located,state)
+		VALUES(#{customerId},#{receivingAddress},#{addressee},#{contactNo},#{whichLocated},#{state});
+	</insert>
+
+	<select id="queryAllAddress" resultType="com.daka.entry.ReceivingAddressVO" parameterType="java.lang.Integer">
+		SELECT * FROM receiving_address_t where customer_id =#{customerId}
+	</select>
+	<select id="queryDefaultAddress" resultType="com.daka.entry.ReceivingAddressVO" parameterType="java.lang.Integer">
+		SELECT * FROM receiving_address_t where state = 1 and customer_id =#{customerId}
+	</select>
+
+	<update id="updateAllState" parameterType="java.lang.Integer">
+		UPDATE receiving_address_t set state = 0 where customer_id = #{customerId}
+	</update>
+
+	<update id="updateAddress" parameterType="com.daka.entry.ReceivingAddressVO">
+		UPDATE receiving_address_t
+		<trim prefix="set" suffixOverrides=",">
+			<if test="receivingAddress !=null and receivingAddress !=''">receiving_address=#{receivingAddress},</if>
+			<if test="addressee !=null and addressee !=''">addressee=#{addressee},</if>
+			<if test="contactNo !=null and contactNo !=''">contact_no=#{contactNo},</if>
+			<if test="whichLocated !=null and whichLocated !=''">which_located=#{whichLocated},</if>
+			<if test="state !=null">state=#{state},</if>
+		</trim>
+		where id = #{id} and customer_id = #{customerId}
+	</update>
+
+	<delete id="delAddress" parameterType="com.daka.entry.ReceivingAddressVO">
+		DELETE from receiving_address_t where  id = #{id} and customer_id = #{customerId}
+	</delete>
+	
+	<select id="queryAddress" parameterType="java.lang.Integer" resultType="java.util.Map">
+		SELECT t1.*,t2.nick_name,t2.phone FROM receiving_address_t t1 LEFT JOIN customer_t t2 ON t1.customer_id = t2.id
+		WHERE t1.state = 1 AND t2.id = #{id}
+	</select>
+
+	<select id="queryAddressById" resultType="com.daka.entry.ReceivingAddressVO" parameterType="java.lang.Integer">
+		select * from receiving_address_t where id=#{id}
+	</select>
+</mapper>

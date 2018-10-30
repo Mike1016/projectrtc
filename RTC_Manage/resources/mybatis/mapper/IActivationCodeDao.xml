@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.daka.dao.activation.ActivationCodeDAO">
+
+    <!-- 查询 -->
+    <select id="queryActivationCodelistPage" resultType="pd" parameterType="page">
+        select * from activation_code_t
+        <if test="pd.code!= null and pd.code != ''">
+            where code like CONCAT('%', #{pd.code}, '%')
+        </if>
+         order by state
+    </select>
+
+    <!--批量生成激活码-->
+    <insert id="insertBatch" parameterType="java.util.List">
+        insert into activation_code_t(id,code,create_time,state) values
+        <foreach collection ="list" item="code" separator =",">
+            ( #{code.id}, #{code.code}, #{code.createTime}, #{code.state})
+        </foreach>
+    </insert>
+
+    <!-- List<String> queryCode(); -->
+    <select id="queryCode" resultType="java.lang.String">
+		select code from activation_code_t
+	</select>
+
+    <!--void deleteCode(Integer id); //根据id删除激活码-->
+    <delete id="deleteCode" parameterType="java.lang.Integer">
+        delete from activation_code_t where id = #{id}
+    </delete>
+
+    <update id="updateState" parameterType="java.lang.String">
+        update activation_code_t set state=1 where code=#{code}
+    </update>
+
+    <select id="queryCodeState" resultType="java.lang.String" parameterType="java.lang.String">
+        select code from activation_code_t where state=0 and code=#{code}
+    </select>
+</mapper>
